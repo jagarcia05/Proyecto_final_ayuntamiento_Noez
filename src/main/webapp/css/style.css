@@ -1,0 +1,97 @@
+/* Colores personalizados basados en el escudo */
+
+.bg-principal {
+    background-color: #C63D1F !important; /* Rojo intenso */
+    color: white;
+}
+
+.bg-secundario {
+    background-color: #C49C48 !important; /* Dorado viejo */
+    color: white;
+}
+
+.bg-beige {
+    background-color: #F8F1DE !important; /* Fondo claro */
+}
+
+.text-marron {
+    color: #4C2E0C !important; /* Texto oscuro */
+}
+
+
+
+.btn-dorado:hover {
+    background-color: #a48136;
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #4C2E0C;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Merriweather', serif;
+    color: #C63D1F;
+}
+.nav-link{
+    font-family: 'Poppins', sans-serif;
+    color: white;
+   
+}
+.nav-link:hover{
+    color: #4C2E0C;
+    font-family: 'Poppins', sans-serif;
+    background-color: #C49C48 ;
+    border-radius: 0.5rem;
+    
+}
+.nav-item{
+    width: 11rem;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+  }
+  
+  /* Evita parpadeos al pasar rápido */
+  .dropdown-menu {
+    transition: all 0.3s ease;
+    background-color: #C49C48;
+    padding: 0;
+    margin: 0;
+
+  }
+  
+  /* Opcional: para que el menú no se cierre al pasar de golpe por el botón */
+    .dropdown-menu {
+     
+        width: 100%;
+    }
+    .dropdown-item:hover {
+        background-color: #C63D1F;
+        color: white;
+    }
+    .dropdown-item {
+        padding: 10px 20px;
+        width: 100%;
+    }
+ .btn-ayuntamiento {
+    background-color: #C63D1F ;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+ }
+ .btn-ayuntamiento:hover {
+    background-color: #a8321a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+ }
