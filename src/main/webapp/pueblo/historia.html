@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    
+
 
 
 
@@ -76,16 +76,24 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="/pueblo/historia.html">Historia</a></li>
-                                    <li><a class="dropdown-item" href="/pueblo/LugarInteres.html">Lugares de interés</a></li>
-                                    <li><a class="dropdown-item" href="#">Fiestas</a></li>
+
+                                    <li><a class="dropdown-item" href="/pueblo/Fiestas.html">Fiestas</a></li>
                                 </ul>
                             </li>
 
-                            <!-- Áreas -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Áreas</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link " href="#" id="puebloDropdown" role="button"
+                                    data-bs-toggle="dropdown">
+                                    Areas
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/Areas/JuventudDeporte.html">Juventud Y <br> Deporte</a></li>
+                                   
+                                    <li><a class="dropdown-item" href="/Areas/CulturaEducacionFestejo.html">Cultura,Educacion <br> Festejos</a></li>
+                                    <li><a class="dropdown-item" href="/Areas/EconomiaHacienda.html">Economia, <br>
+                                        Hacienda y <br> Bienestar Social</a></li>
+                                </ul>
                             </li>
-
                             <!-- Ayuntamiento -->
                             <li class="nav-item">
                                 <a class="nav-link" href="#">El Ayuntamiento</a>
@@ -117,98 +125,93 @@
 
 
     <main>
-       
+
 
         <section class="historia-Noez container my-5">
-            <div class="row align-items-center">
+            <h2 class="text-center mb-5 display-5 fw-bold">Historia de Noez</h2>
+
+            <!-- Primera sección: Historia Antigua de Noez -->
+            <div class="row align-items-center mb-5">
                 <div class="col-md-6 mb-4 order-md-2">
-                    <h2 class="text-center mb-4">Historia de Noez</h2>
+                    <h3 class="fw-bold">📜 Orígenes de Noez</h3>
                     <p class="text-justify">
-                        Noez es un pequeño y pintoresco pueblo situado en la provincia de Toledo, Castilla-La Mancha. Su historia
-                        se remonta al siglo XIII, cuando en 1238 se registran las primeras menciones de su existencia en documentos
-                        de la época de la Reconquista. En aquellos tiempos, Noez formaba parte del extenso territorio que estaba
-                        bajo la influencia de los reinos cristianos, luchando contra la ocupación musulmana.
+                        Noez es un pequeño y pintoresco pueblo situado en la provincia de Toledo, Castilla-La Mancha. Su
+                        historia se remonta al siglo XIII, cuando en 1238 se registran las primeras menciones de su
+                        existencia en documentos de la época de la Reconquista. En aquellos tiempos, Noez formaba parte
+                        del extenso territorio que estaba bajo la influencia de los reinos cristianos, luchando contra
+                        la ocupación musulmana.
                     </p>
                     <p class="text-justify">
-                        En 1326, bajo el mandato de Alfonso Fernández Nieto, Noez fue formalmente constituido como villa, un
-                        reconocimiento que lo distinguió como una entidad autónoma con derechos propios, aunque seguía dependiendo
-                        del poder feudal de Toledo. Durante los siglos XV y XVI, el pueblo pasó a ser propiedad de la noble familia
-                        Niño, quienes dejaron una huella significativa en la cultura y el patrimonio de Noez.
+                        En 1326, bajo el mandato de Alfonso Fernández Nieto, Noez fue formalmente constituido como
+                        villa, un reconocimiento que lo distinguió como una entidad autónoma con derechos propios,
+                        aunque seguía dependiendo del poder feudal de Toledo.
                     </p>
                     <p class="text-justify">
-                        Fue durante el reinado de Carlos II, en 1672, cuando Noez adquirió la categoría de villa, separándose de la
-                        ciudad de Toledo y obteniendo el privilegio de jurisdicción. Este cambio otorgó al pueblo mayor autonomía,
-                        lo que permitió a sus habitantes prosperar y desarrollar una identidad local más fuerte. A lo largo de los
-                        siglos, el pueblo ha mantenido su esencia, preservando tradiciones que se celebran hasta el día de hoy.
-                    </p>
-                    <p class="text-justify">
-                        En la actualidad, Noez es conocido por sus festividades locales, como la Fiesta de la Virgen de la Encarnación,
-                        celebrada cada 8 de septiembre, donde los vecinos se reúnen para rendir homenaje a su patrona. Las festividades
-                        son un claro reflejo del espíritu comunitario y de la profunda devoción religiosa de sus habitantes.
-                    </p>
-                    <p class="text-justify">
-                        El legado arquitectónico de Noez también se destaca, con su iglesia parroquial de San Julián y el imponente Palacio
-                        de los Niño, que aún conservan su belleza original. Estos monumentos son testigos de la historia del pueblo, que
-                        ha evolucionado desde sus inicios medievales hasta convertirse en un moderno centro rural lleno de vida y tradición.
-                    </p>
-                    <p class="text-justify">
-                        Hoy en día, Noez se presenta como un destino turístico que atrae tanto a quienes buscan la belleza natural de
-                        Castilla-La Mancha como a los interesados en la historia medieval y renacentista. La combinación de un entorno
-                        rural y una rica herencia cultural lo convierten en un lugar único que sigue siendo fiel a sus raíces.
+                        Durante los siglos XV y XVI, el pueblo pasó a ser propiedad de la noble familia Niño, quienes
+                        dejaron una huella significativa en la cultura y el patrimonio de Noez. A lo largo de los
+                        siglos, el pueblo ha mantenido su esencia, preservando tradiciones que se celebran hasta el día
+                        de hoy.
                     </p>
                 </div>
                 <div class="col-md-6 mb-4 order-md-1 text-center">
                     <img src="/img/fotoantigua2.jpg" alt="Imagen antigua del pueblo de Noez"
-                        class="img-fluid rounded" data-bs-toggle="modal" data-bs-target="#imagenModal1" />
+                        class="img-fluid rounded shadow" data-bs-toggle="modal" data-bs-target="#imagenModal1" />
                 </div>
-                <div class="modal fade" id="imagenModal1" tabindex="-1" aria-labelledby="imagenModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-xl modal-dialog-centered">
-                        <div class="modal-content">
-                            <img src="/img/fotoantigua2.jpg" alt="Imagen del evento" class="img-fluid" />
-                        </div>
+            </div>
+
+            <!-- Modal de la imagen antigua -->
+            <div class="modal fade" id="imagenModal1" tabindex="-1" aria-labelledby="imagenModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-centered">
+                    <div class="modal-content">
+                        <img src="/img/fotoantigua2.jpg" alt="Imagen antigua de Noez" class="img-fluid rounded" />
                     </div>
                 </div>
             </div>
-        
-            <!-- Segunda imagen y su modal -->
+
+            <!-- Segunda sección: La transformación de Noez en el siglo XX -->
             <div class="row align-items-center mt-5">
                 <div class="col-md-6 mb-4">
-                    <h3 class="text-center mb-4">La transformación de Noez en el siglo XX</h3>
+                    <h3 class="fw-bold">🔄 La transformación en el siglo XX</h3>
                     <p class="text-justify">
-                        A lo largo del siglo XX, Noez vivió una serie de transformaciones que marcaron el paso de la época agrícola
-                        hacia la modernización del pueblo. Durante las primeras décadas, la economía de Noez seguía dependiendo en gran
-                        medida de la agricultura, con cultivos de cereales y viñedos que eran la principal fuente de vida para la
-                        mayoría de los habitantes.
+                        A lo largo del siglo XX, Noez vivió una serie de transformaciones que marcaron el paso de la
+                        época agrícola hacia la modernización del pueblo. Durante las primeras décadas, la economía de
+                        Noez seguía dependiendo en gran medida de la agricultura, con cultivos de cereales y viñedos que
+                        eran la principal fuente de vida para la mayoría de los habitantes.
                     </p>
                     <p class="text-justify">
-                        En los años posteriores a la Guerra Civil Española, el pueblo experimentó una lenta reconstrucción. La llegada
-                        de nuevas infraestructuras y la mejora de las comunicaciones con Toledo permitió un desarrollo económico
-                        sostenido, aunque el sector agrícola continuó siendo el pilar fundamental de la economía local.
+                        En los años posteriores a la Guerra Civil Española, el pueblo experimentó una lenta
+                        reconstrucción. La llegada de nuevas infraestructuras y la mejora de las comunicaciones con
+                        Toledo permitió un desarrollo económico sostenido, aunque el sector agrícola continuó siendo el
+                        pilar fundamental de la economía local.
                     </p>
                     <p class="text-justify">
-                        Durante las últimas décadas, Noez ha experimentado un crecimiento moderado, incorporando algunas instalaciones
-                        modernas como centros educativos y zonas recreativas, lo que lo convierte en un lugar perfecto para vivir
-                        o para una escapada rural. A pesar de la modernización, el pueblo conserva su carácter tradicional, lo cual
-                        es evidente en sus calles empedradas, su arquitectura típica y las festividades populares que aún celebran sus
-                        habitantes.
+                        Durante las últimas décadas, Noez ha experimentado un crecimiento moderado, incorporando algunas
+                        instalaciones modernas como centros educativos y zonas recreativas, lo que lo convierte en un
+                        lugar perfecto para vivir o para una escapada rural. A pesar de la modernización, el pueblo
+                        conserva su carácter tradicional, lo cual es evidente en sus calles empedradas, su arquitectura
+                        típica y las festividades populares que aún celebran sus habitantes.
                     </p>
                 </div>
                 <div class="col-md-6 mb-4 text-center">
                     <img src="/img/Modernizacion.jpg" alt="Imagen de la modernización de Noez"
-                        class="img-fluid rounded" data-bs-toggle="modal" data-bs-target="#imagenModal2" />
+                        class="img-fluid rounded shadow" data-bs-toggle="modal" data-bs-target="#imagenModal2" />
                 </div>
-                <div class="modal fade" id="imagenModal2" tabindex="-1" aria-labelledby="imagenModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-xl modal-dialog-centered">
-                        <div class="modal-content">
-                            <img src="/img/Modernizacion.jpg" alt="Imagen de la modernización de Noez" class="img-fluid" />
-                        </div>
+            </div>
+
+            <!-- Modal de la imagen de la modernización -->
+            <div class="modal fade" id="imagenModal2" tabindex="-1" aria-labelledby="imagenModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-centered">
+                    <div class="modal-content">
+                        <img src="/img/Modernizacion.jpg" alt="Imagen de la modernización de Noez"
+                            class="img-fluid rounded" />
                     </div>
                 </div>
             </div>
         </section>
-        
+
+
 
     </main>
     <footer class="bg-principal text-white p-5">
