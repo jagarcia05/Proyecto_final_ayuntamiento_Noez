@@ -1,21 +1,21 @@
 /* Colores personalizados basados en el escudo */
 
 .bg-principal {
-    background-color: #C63D1F !important; /* Rojo intenso */
+    background-color: #C63D1F ; /* Rojo intenso */
     color: white;
 }
 
 .bg-secundario {
-    background-color: #C49C48 !important; /* Dorado viejo */
+    background-color: #C49C48 ; /* Dorado viejo */
     color: white;
 }
 
 .bg-beige {
-    background-color: #F8F1DE !important; /* Fondo claro */
+    background-color: #F8F1DE ; /* Fondo claro */
 }
 
 .text-marron {
-    color: #4C2E0C !important; /* Texto oscuro */
+    color: #4C2E0C ; 
 }
 
 
@@ -100,8 +100,25 @@ h1, h2, h3, h4, h5, h6 {
     width: 500px;
     object-fit: cover; /* Asegura que las imágenes no se deformen */
 }
+
 .img-uniforme {
     height: 300px;
     width: 100%;
     object-fit: cover;
+}
+.img-fluid1 {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: zoom-in;
+}
+
+.img-fluid1:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+.btn-localizacion:hover {
+  background-color: #C49C48;
+}
+.btn-localizacion {
+  background-color: #C63D1F;
+    color: white;
 }
