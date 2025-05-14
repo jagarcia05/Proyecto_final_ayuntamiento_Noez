@@ -21,10 +21,40 @@ const header = `
                 <h1 class="mb-0 fs-4 text-marron">Ayuntamiento de Noez</h1>
             </div>
             <div class="d-none d-md-block">
-                <button class="btn-ayuntamiento">Iniciar sesión</button>
+              <button type="buttonIniciarSesion" class=" btn-ayuntamiento btn   mt-3" data-bs-toggle="modal"
+                        data-bs-target="#ModalIniciarSesion"> Iniciar Sesión</button>
+                
             </div>
         </div>
-
+<div class="modal fade" id="ModalIniciarSesion" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-primary">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="loginModalLabel">Inicio de Sesión - Ayuntamiento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <form action="Controller?operacion=login" method="post">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="usuario" class="form-label">Usuario</label>
+            <input type="text" class="form-control" id="usuario" name="usuario" required>
+          </div>
+          <div class="mb-3">
+            <label for="contrasena" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="contrasena" name="contrasena" required>
+          </div>
+          <div class="form-text text-danger">
+            Solo personal autorizado del Ayuntamiento
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
         <nav class="navbar navbar-expand-lg bg-principal navbar-dark">
             <div class="container">
                 <a class="navbar-brand d-lg-none" href="#">Menú</a>
@@ -76,12 +106,16 @@ const header = `
                                 Información
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Noticias</a></li>
-                                <li><a class="dropdown-item" href="#">Eventos</a></li>
+                                <li><a class="dropdown-item" href="Controller?Operacion=ListaNoticias">Noticias</a></li>
+                                <li><a class="dropdown-item" href="Controller?Operacion=ListaEventos">Eventos</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="https://noez.sedelectronica.es/info.0"> <i class="fa fa-reply pe-2"></i>Sede Electrónica</a>
+                        </li>
+
+                       <li class="nav-item" id="adminNavItem" style="">
+                            <a class="nav-link" href="/Administrador/admin.html">Administrador</a>
                         </li>
 
                     </ul>
@@ -92,9 +126,14 @@ const header = `
 </header>
 
 `;
+/*document.querySelector("header").innerHTML = header;
+function checkAdminRole() {
+    
+    const rol = sessionStorage.getItem("rol"); 
+    if (rol && rol === "admin") {
+        document.getElementById("adminNavItem").style.display = "block"; 
+    }
+}
+checkAdminRole();
+*/
 document.querySelector("header").innerHTML = header;
-
-
-
-
-
