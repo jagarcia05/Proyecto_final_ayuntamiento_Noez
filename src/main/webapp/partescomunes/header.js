@@ -1,6 +1,7 @@
 const header = `
 
-<header class="shadow-sm">
+
+<header class="shadow-sm z-1" >
 
     <div class="bg-principal py-2">
         <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center text-center text-md-start">
@@ -29,8 +30,8 @@ const header = `
 <div class="modal fade" id="ModalIniciarSesion" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content border-primary">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="loginModalLabel">Inicio de Sesión - Ayuntamiento</h5>
+      <div class="modal-header bg-principal text-white">
+        <h5 class="modal-title text-white" id="loginModalLabel">Inicio de Sesión - Ayuntamiento</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
       <form action="Controller?operacion=login" method="post">
@@ -48,15 +49,15 @@ const header = `
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+          <button type="submit" class="btn btn-localizacion ">Iniciar sesión</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         </div>
       </form>
     </div>
   </div>
 </div>
-        <nav class="navbar navbar-expand-lg bg-principal navbar-dark">
-            <div class="container">
+        <nav class="navbar navbar-expand-lg bg-principal navbar-dark  justify-content-center">
+            <div class="text-center ">
                 <a class="navbar-brand d-lg-none" href="#">Menú</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
                     <span class="navbar-toggler-icon"></span>
@@ -85,7 +86,7 @@ const header = `
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/Areas/JuventudDeporte.html">Juventud y <br> Deporte</a></li>
-                                <li><a class="dropdown-item" href="./CulturaEducacionFestejo.html">Cultura, Educación, <br> Festejos</a></li>
+                                <li><a class="dropdown-item" href="./CulturaEducacionFestejo.html">Cultura, <br> Educación, <br> Festejos</a></li>
                                 <li><a class="dropdown-item" href="/Areas/EconomiaHacienda.html">Economía, <br> Hacienda y <br> Bienestar Social</a></li>
                                 <li><a class="dropdown-item" href="/Areas/NaturalezMedioambiente.html">Naturaleza <br> y Medioambiente</a></li>
                             </ul>

@@ -14,7 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
 
 
@@ -31,11 +32,11 @@
 
 
         <section class="historia-Noez container my-5">
-            <h2 class="text-center mb-5 display-5 fw-bold">Historia de Noez</h2>
+            <h2 class="text-center mb-5 display-5 fw-bold" data-aos="fade-down">Historia de Noez</h2>
 
             <!-- Primera sección: Historia Antigua de Noez -->
             <div class="row align-items-center mb-5">
-                <div class="col-md-6 mb-4 order-md-2">
+                <div class="col-md-6 mb-4" data-aos="fade-down">
                     <h3 class="fw-bold">📜 Orígenes de Noez</h3>
                     <p class="text-justify">
                         Noez es un pequeño y pintoresco pueblo situado en la provincia de Toledo, Castilla-La Mancha. Su
@@ -56,7 +57,7 @@
                         de hoy.
                     </p>
                 </div>
-                <div class="col-md-6 mb-4 order-md-1 text-center">
+                <div class="col-md-6 mb-4 text-center" data-aos="zoom-in">
                     <img src="/img/fotoantigua2.jpg" alt="Imagen antigua del pueblo de Noez"
                         class="img-fluid1 rounded shadow" data-bs-toggle="modal" data-bs-target="#imagenModal1" />
                 </div>
@@ -74,7 +75,7 @@
 
             <!-- Segunda sección: La transformación de Noez en el siglo XX -->
             <div class="row align-items-center mt-5">
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6 mb-4" data-aos="fade-up">
                     <h3 class="fw-bold">🔄 La transformación en el siglo XX</h3>
                     <p class="text-justify">
                         A lo largo del siglo XX, Noez vivió una serie de transformaciones que marcaron el paso de la
@@ -96,7 +97,7 @@
                         típica y las festividades populares que aún celebran sus habitantes.
                     </p>
                 </div>
-                <div class="col-md-6 mb-4 text-center">
+                <div class="col-md-6 mb-4 text-center" data-aos="zoom-out">
                     <img src="/img/Modernizacion.jpg" alt="Imagen de la modernización de Noez"
                         class="img-fluid1 rounded shadow" data-bs-toggle="modal" data-bs-target="#imagenModal2" />
                 </div>
@@ -118,7 +119,13 @@
 
     </main>
    <footer></footer>
-
+      <script>
+  AOS.init({
+    duration: 1000, // Duración de la animación
+    easing: 'ease-in-out', // Estilo de la animación
+    once: true // Si la animación debe ocurrir solo una vez
+  });
+</script>
 <script src="../partescomunes/footer.js"></script>
       <script src="../partescomunes/header.js"></script>
     <!-- Bootstrap JavaScript Libraries -->

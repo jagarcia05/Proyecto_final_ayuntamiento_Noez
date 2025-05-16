@@ -17,6 +17,9 @@
 .text-marron {
     color: #4C2E0C ; 
 }
+.text-secundario {
+    color: #C49C48 ; /* Dorado viejo */
+}
 
 
 
@@ -36,20 +39,24 @@ h1, h2, h3, h4, h5, h6 {
 .nav-link{
     font-family: 'Poppins', sans-serif;
     color: white;
-   
+    z-index: 1000;
+    
 }
 .nav-link:hover{
     color: #4C2E0C;
     font-family: 'Poppins', sans-serif;
     background-color: #C49C48 ;
     border-radius: 0.5rem;
+
+   
     
 }
 .nav-item{
-   
-    padding: 0 20px;
+    
+    width: 180px;
     margin: 0;
     text-align: center;
+    
 }
 
 .nav-item.dropdown:hover .dropdown-menu {
@@ -69,7 +76,9 @@ h1, h2, h3, h4, h5, h6 {
   /* Opcional: para que el menú no se cierre al pasar de golpe por el botón */
     .dropdown-menu {
      
-        width: 100%;
+        width: 180px;
+      
+      
     }
     .dropdown-item:hover {
         background-color: #C63D1F;
@@ -78,6 +87,7 @@ h1, h2, h3, h4, h5, h6 {
     .dropdown-item {
         padding: 10px 20px;
         width: 100%;
+        z-index: 1000;
     }
  .btn-ayuntamiento {
     background-color: #C63D1F ;
@@ -121,4 +131,7 @@ h1, h2, h3, h4, h5, h6 {
 .btn-localizacion {
   background-color: #C63D1F;
     color: white;
+}
+.btn-secondary:hover {
+    background-color: #755e2b;
 }

@@ -14,7 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-   
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
 
 
@@ -29,11 +30,11 @@
     <main>
 
         <section class="Naturaleza-Medioambiente container my-5">
-            <h2 class="text-center mb-5 display-5 fw-bold">Naturaleza y Medio Ambiente</h2>
+            <h2 class="text-center mb-5 display-5 fw-bold"data-aos="fade-up" >Naturaleza y Medio Ambiente</h2>
 
             <!-- Sierra de Noez -->
             <div class="row align-items-center mb-5">
-                <div class="col-md-6 mb-4 text-center">
+                <div class="col-md-6 mb-4 text-center" data-aos="zoom-in">
                     <img src="../img/SierraNoez.jpg" alt="Sierra de Noez" class="img-fluid1 rounded shadow"
                         data-bs-toggle="modal" data-bs-target="#modalSierraNoez" />
                     <button type="button" class="btn btn-localizacion mt-3" data-bs-toggle="modal"
@@ -41,7 +42,7 @@
                         Localización
                     </button>
                 </div>
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6 mb-4" data-aos="fade-up">
                     <h3 class="fw-bold">⛰️ Sierra de Noez</h3>
                     <p>
                         La Sierra de Noez es la principal formación geográfica del municipio, destacando como un
@@ -74,7 +75,7 @@
             <!-- Ruta al Pico de Noez -->
             <div class="row align-items-center mb-5">
 
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6 mb-4" data-aos="fade-down">
                     <h3 class="fw-bold">🥾 Ruta al Pico de Noez</h3>
                     <p>
                         Una de las rutas más populares es la ascensión al Pico de Noez, con una distancia aproximada
@@ -83,7 +84,7 @@
                         nivel intermedio.
                     </p>
                 </div>
-                <div class="col-md-6 mb-4 text-center">
+                <div class="col-md-6 mb-4 text-center" data-aos="zoom-out">
                     <img src="../img/RutaPicoNoez.jpg" alt="Ruta al Pico de Noez" class="img-fluid1 rounded shadow"
                         data-bs-toggle="modal" data-bs-target="#modalRutaPicoNoez" />
                     <button type="button" class="btn btn-localizacion mt-3" data-bs-toggle="modal"
@@ -114,7 +115,7 @@
                 </div>
             </div>
             <div class="row align-items-center mb-5">
-                <div class="col-md-6 mb-4 text-center">
+                <div class="col-md-6 mb-4 text-center" data-aos="zoom-in">
                     <img src="../img/parqueNoez.png" alt="Ruta al Pico de Noez" class="img-fluid1 rounded shadow"
                         data-bs-toggle="modal" data-bs-target="#modalParqueNoez" />
                     <button type="button" class="btn btn-localizacion mt-3" data-bs-toggle="modal"
@@ -122,7 +123,7 @@
                         Localización
                     </button>
                 </div>
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6 mb-4" data-aos="fade-up">
                     <h3 class="fw-bold">🌳 Parque Noez</h3>
                     <p>
                         El Parque Noez es un lugar amplio y tranquilo, ideal para ir con niños y disfrutar de un día al
@@ -156,7 +157,7 @@
             </div>
             <div class="row align-items-center mb-5">
 
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6 mb-4" data-aos="fade-down">
                     <h3 class="fw-bold">🍃 Parque del Prao</h3>
                     <p>
                         El Parque del Prao es un espacio verde que ofrece una variedad de actividades al aire libre,
@@ -168,7 +169,7 @@
 
                     </p>
                 </div>
-                <div class="col-md-6 mb-4 text-center">
+                <div class="col-md-6 mb-4 text-center" data-aos="zoom-out">
                     <img src="../img/ParquePrao.png" alt="Ruta al Pico de Noez" class="img-fluid1 rounded shadow"
                         data-bs-toggle="modal" data-bs-target="#modalParquePrao" />
                     <button type="button" class="btn btn-localizacion mt-3" data-bs-toggle="modal"
@@ -251,8 +252,15 @@
 
     </main>
     <footer></footer>
-<script src="../partescomunes/footer.js"></script>
-      <script src="../partescomunes/header.js"></script>
+             <script>
+  AOS.init({
+    duration: 1000, // Duración de la animación
+    easing: 'ease-in-out', // Estilo de la animación
+    once: true // Si la animación debe ocurrir solo una vez
+  });
+</script>
+    <script src="../partescomunes/footer.js"></script>
+    <script src="../partescomunes/header.js"></script>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

@@ -14,7 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
- 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
 
 
@@ -31,10 +32,10 @@
 
 
         <section class="Lugar-interes container my-5">
-            <h2 class="text-center mb-5 display-5 fw-bold">Fiestas de Noez</h2>
+            <h2 class="text-center mb-5 display-5 fw-bold" data-aos="fade-down">Fiestas de Noez</h2>
 
             <!-- Cruz de Mayo -->
-            <div class="row align-items-center mb-5">
+            <div class="row align-items-center mb-5" data-aos="fade-up">
                 <div class="col-md-6 mb-4">
                     <h3 class="fw-bold">🌿 Cruz de Mayo</h3>
                     <p class="text-justify">
@@ -57,7 +58,7 @@
             </div>
 
             <!-- Fiestas Patronales -->
-            <div class="row align-items-center mb-5">
+            <div class="row align-items-center mb-5" data-aos="fade-up">
                 <div class="col-md-6 mb-4 text-center">
                     <img src="../img/FiestaCristo.jpg" alt="Fiestas Patronales Noez" class="img-fluid1 rounded shadow"
                         data-bs-toggle="modal" data-bs-target="#imagenModalCristo" />
@@ -84,7 +85,7 @@
             </div>
 
             <!-- Quema del Judas -->
-            <div class="row align-items-center mb-5">
+            <div class="row align-items-center mb-5" data-aos="fade-down">
 
                 <div class="col-md-6 mb-4">
                     <h3 class="fw-bold">🔥 Quema del Judas</h3>
@@ -103,7 +104,7 @@
                 </div>
             </div>
 
-            <div class="row align-items-center mb-5">
+            <div class="row align-items-center mb-5" data-aos="fade-down">
                 <div class="col-md-6 mb-4 text-center">
                     <img src="../img/Fiesta Quintos.jpg" alt="Quema del Judas Noez" class="img-fluid1 rounded shadow"
                         data-bs-toggle="modal" data-bs-target="#imagenModalFiestaQuintos" />
@@ -161,7 +162,13 @@
 
     </main>
     <footer></footer>
-
+       <script>
+  AOS.init({
+    duration: 1000, // Duración de la animación
+    easing: 'ease-in-out', // Estilo de la animación
+    once: true // Si la animación debe ocurrir solo una vez
+  });
+</script>
     <script src="../partescomunes/footer.js"></script>
       <script src="../partescomunes/header.js"></script>
     <!-- Bootstrap JavaScript Libraries -->

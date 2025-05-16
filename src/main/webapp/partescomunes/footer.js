@@ -1,4 +1,4 @@
-const footer = ` <footer class="bg-principal text-white p-5">
+const footer = ` <footer class="bg-principal text-white p-5" data-aos="fade-up">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
@@ -16,7 +16,9 @@ const footer = ` <footer class="bg-principal text-white p-5">
                 </div>
             </div>
         </div>
-    </footer> `
+    </footer>
+
+ `
 
 
 document.querySelector("footer").innerHTML = footer;

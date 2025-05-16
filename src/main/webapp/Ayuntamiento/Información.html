@@ -14,7 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
- 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
 
 
@@ -29,7 +30,7 @@
 
     <main>
 
-        <section class="container my-5">
+        <section class="container my-5" data-aos="fade-down">
 
             <section class="container my-5">
                 <h2 class="text-center mb-4 display-5 fw-bold">📍 Contactos</h2>
@@ -56,7 +57,7 @@
                                 <div class="mt-3">
                                     <iframe
                                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3067.90907266082!2d-4.18697172378762!3d39.74169329644755!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6a6e2829f11165%3A0x2fdcc49d7d94af1d!2sAyuntamiento%20de%20Noez!5e0!3m2!1ses!2ses!4v1747037522991!5m2!1ses!2ses"
-                                        width="600%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
                                         referrerpolicy="no-referrer-when-downgrade"></iframe>
                                 </div>
                             </div>
@@ -152,6 +153,13 @@
 
     </main>
    <footer></footer>
+    <script>
+  AOS.init({
+    duration: 1000, // Duración de la animación
+    easing: 'ease-in-out', // Estilo de la animación
+    once: true // Si la animación debe ocurrir solo una vez
+  });
+</script>
 <script src="../partescomunes/footer.js"></script>
       <script src="../partescomunes/header.js"></script>
 
