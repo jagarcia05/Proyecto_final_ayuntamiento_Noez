@@ -105,23 +105,19 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 16px;
     border-radius: 5px;
  }
- .img-fluid1 {
-    height: 400px;
-    width: 500px;
-    object-fit: cover; /* Asegura que las imágenes no se deformen */
-}
+
 
 .img-uniforme {
     height: 300px;
     width: 100%;
     object-fit: cover;
 }
-.img-fluid1 {
+.img-fluid {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: zoom-in;
 }
 
-.img-fluid1:hover {
+.img-fluid:hover {
     transform: scale(1.05);
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
@@ -131,6 +127,7 @@ h1, h2, h3, h4, h5, h6 {
 .btn-localizacion {
   background-color: #C63D1F;
     color: white;
+    
 }
 .btn-secondary:hover {
     background-color: #755e2b;
