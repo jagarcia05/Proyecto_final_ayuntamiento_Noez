@@ -2,58 +2,36 @@ package model;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-import java.util.Date;
 
 
 /**
- * The persistent class for the usuarios database table.
+ * The persistent class for the usuario database table.
  * 
  */
 @Entity
-@Table(name="usuarios")
 @NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u")
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private String contrasena;
+	private String email;
 
-	private String correo;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="fecha_registro")
-	private Date fechaRegistro;
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	private String nombre;
 
-	private String rol;
+	private String password;
 
 	public Usuario() {
 	}
 
-	public String getContrasena() {
-		return this.contrasena;
+	public String getEmail() {
+		return this.email;
 	}
 
-	public void setContrasena(String contrasena) {
-		this.contrasena = contrasena;
-	}
-
-	public String getCorreo() {
-		return this.correo;
-	}
-
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
-
-	public Date getFechaRegistro() {
-		return this.fechaRegistro;
-	}
-
-	public void setFechaRegistro(Date fechaRegistro) {
-		this.fechaRegistro = fechaRegistro;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public int getId() {
@@ -72,12 +50,12 @@ public class Usuario implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public String getRol() {
-		return this.rol;
+	public String getPassword() {
+		return this.password;
 	}
 
-	public void setRol(String rol) {
-		this.rol = rol;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

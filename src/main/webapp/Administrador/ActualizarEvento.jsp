@@ -48,7 +48,7 @@
 
 
 
-        <h2 class="pt-5 text-center">✏️ Actualizar Evento</h2>
+        <h2 class="pt-5 text-center">� Actualizar Evento</h2>
         <form id="form-actualizar" action="Controller" method="post" enctype="multipart/form-data">
             <input type="hidden" name="operacion" value="actualizarEvento">
             <input type="hidden" name="id" value="<%= evento.getId() %>">
