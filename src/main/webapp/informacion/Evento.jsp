@@ -1,3 +1,6 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <!doctype html>
 <html lang="en">
 
@@ -27,23 +30,28 @@
     <header></header>
 
 
-   <main class="container py-5">
-    <h1 class="mb-3"><%= Evento.getTitulo() %></h1>
-    <p class="text-muted">
-        <i class="fa fa-calendar-alt"></i>Evento.getFecha() %> |
-        <i class="fa fa-map-marker-alt"></i> <%= Evento.getLugar() %>
-    </p>
+  <main>
 
-    <img src="img/eventos/<%= evento.getImagen() %>" class="img-fluid rounded mb-4 border" alt="Imagen del evento">
-
-    <p class="lead"><%= Evento.getResumen() %></p>
-    <hr>
-    <div style="white-space: pre-line;">
-        <%= Evento.getDescripcionCompleta() %>
-    </div>
-
-    <a href="Eventos.jsp" class="btn btn-secondary mt-4">← Volver a Eventos</a>
-</main>
+		<c:if test="${not empty ListaEvento}">
+			<h2 class="pt-5 text-center">📝ListaEvento</h2>
+			 <c:forEach var="evento" items="${ListaEvento}">
+				<div class="card mb-3">
+					<div class="card-body">
+						<h5 class="card-title">${evento.titulo}</h5>
+						<p class="card-text">${evento.descripcion}</p>
+						<img src="${evento.imagen}" class="card-img-top" alt="Imagen del evento">
+						<p class="card-text">
+							<small class="text-muted">Fecha: ${evento.fecha}</small>
+						</p>
+						<a href="ActualizarEvento.jsp?id=${evento.id}"
+							class="btn btn-primary">Actualizar</a>
+						<a href="Controller?operacion=eliminarEvento&id=${evento.id}"
+						    class="btn btn-danger">Eliminar</a>
+					</div>
+			    </div>
+			    </c:forEach>
+					</c:if>
+	</main>
     <footer></footer>
     <script src="../partescomunes/footer.js"></script>
     <script src="../partescomunes/header.js"></script>

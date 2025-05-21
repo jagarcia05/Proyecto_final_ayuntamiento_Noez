@@ -9,7 +9,7 @@ public class NoticiasDao {
 	public List<Noticias> obtenerTodasLasNoticiass() {
 	EntityManager em = BaseJPADao.getEntityManager();
 	em.getTransaction().begin();
-	List<Noticias> noticias = em.createQuery("SELECT n FROM Noticiass n", Noticias.class).getResultList();
+	List<Noticias> noticias = em.createQuery("SELECT n FROM Noticias n", Noticias.class).getResultList();
 	em.getTransaction().commit();
 	
 	

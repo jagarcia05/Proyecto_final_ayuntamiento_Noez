@@ -20,5 +20,6 @@ const footer = ` <footer class="bg-principal text-white p-5" data-aos="fade-up">
 
  `
 
-
+ document.addEventListener('DOMContentLoaded', () => {
 document.querySelector("footer").innerHTML = footer;
+});

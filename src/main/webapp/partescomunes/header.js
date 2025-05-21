@@ -107,8 +107,8 @@ const header = `
                                 Información
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="Controller?Operacion=ListaNoticias">Noticias</a></li>
-                                <li><a class="dropdown-item" href="Controller?Operacion=ListaEventos">Eventos</a></li>
+                                <li><a class="dropdown-item" href="/Proyecto_final_ayuntamiento_Noez/Controller?Operacion=listaNoticias">Noticias</a></li>
+                                <li><a class="dropdown-item" href="/Proyecto_final_ayuntamiento_Noez/Controller?Operacion=listarEventos">Eventos</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -137,4 +137,6 @@ function checkAdminRole() {
 }
 checkAdminRole();
 */
+document.addEventListener('DOMContentLoaded', () => {
 document.querySelector("header").innerHTML = header;
+});

@@ -59,17 +59,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const Titulo = document.getElementById('titulo-evento').value.trim();
         const Fecha = document.getElementById('fecha-evento').value.trim();
-        const Autor = document.getElementById('autor-evento').value.trim();
+        const lugar = document.getElementById('lugar-evento').value.trim();
         const ImagenInput = document.getElementById('imagen-evento');
         const Resumen = document.getElementById('resumen-evento').value.trim();
         const Contenido = document.getElementById('contenido-evento').value.trim();
 
         // Validar campos vacíos
-        if (!Titulo || !Fecha || !Autor || ImagenInput.files.length === 0 || !Resumen || !Contenido) {
-            alert("Por favor, completa todos los campos.");
-            return;
-        }
-
+		 if (!Titulo || !Fecha || !lugar || ImagenInput.files.length === 0 || !Resumen || !Contenido) {
+			 alert("Por favor, completa todos los campos.");
+			 return;
+		 }
         // Validar extensión de imagen
         const nombreArchivo = ImagenInput.files[0].name.toLowerCase();
         const extensionValida = /\.(jpg|jpeg|png)$/i;
@@ -95,10 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        if (Autor.length > 50) {
-            alert("El autor no puede exceder los 50 caracteres.");
-            return;
-        }
+        
 
         // Mostrar spinner y enviar
         document.getElementById('loadingSpinner').classList.remove('d-none');

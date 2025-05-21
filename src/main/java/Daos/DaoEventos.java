@@ -1,15 +1,17 @@
 package Daos;
 import java.util.List;
 
+import jakarta.persistence.EntityManager;
 import model.Eventos;
 
 public class DaoEventos {
 	
 	public List<Eventos> obtenerTodosLosEventoss() {
-		BaseJPADao dao = new BaseJPADao();
-		List<Eventos> eventos = dao.getEntityManager().createQuery("SELECT e FROM Eventos e", Eventos.class).getResultList();
-				
-		dao.getEntityManager().close();
+		EntityManager em = BaseJPADao.getEntityManager();
+		em.getTransaction().begin();
+		List<Eventos> eventos = em.createQuery("SELECT e FROM Eventos e", Eventos.class).getResultList();
+		em.getTransaction().commit();
+		em.close();
 		return eventos;
 	}
 
@@ -21,24 +23,32 @@ public class DaoEventos {
 	}
 
 	public void guardarEventoss(Eventos evento) {
-		BaseJPADao dao = new BaseJPADao();
-		dao.getEntityManager().persist(evento);
-		dao.getEntityManager().close();
+		EntityManager em = BaseJPADao.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(evento);
+		em.getTransaction().commit();
+		em.close();
+		
 	}
 
 	public void actualizarEventos(Eventos evento) {
 		BaseJPADao dao = new BaseJPADao();
+		dao.getEntityManager().getTransaction().begin();
 		dao.getEntityManager().merge(evento);
+		dao.getEntityManager().getTransaction().commit();
 		dao.getEntityManager().close();
 	}
 
 	public void eliminarEventos(int id) {
-		BaseJPADao dao = new BaseJPADao();
-		Eventos evento = dao.getEntityManager().find(Eventos.class, id);
+		EntityManager em = BaseJPADao.getEntityManager();
+		em.getTransaction().begin();
+		Eventos evento = em.find(Eventos.class, id);
 		if (evento != null) {
-			dao.getEntityManager().remove(evento);
+			em.remove(evento);
 		}
-		dao.getEntityManager().close();
+		em.getTransaction().commit();
+		em.close();
+		
 	}
 	
 

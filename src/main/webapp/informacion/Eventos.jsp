@@ -1,3 +1,5 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!doctype html>
 <html lang="en">
 
@@ -29,43 +31,64 @@
 
     <main>
 
-        <section class="bg-light py-5">
-            <div class="container">
-                <h2 class="text-center mb-5">🎉 Próximos Eventos</h2>
+      <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-                <div class="row align-items-center mb-5">
-                    <!-- Imagen del evento -->
-                    <div class="col-lg-6 text-center">
-                        <img src="img/eventos/romeria2025.jpg" alt="Imagen del evento"
-                            class="img-fluid rounded shadow-lg border border-2 border-success"
-                            style="max-height: 400px;">
-                    </div>
+<c:if test="${not empty ListaEvento}">
+    <h2 class="pt-5 text-center mb-4">📝 Lista de Eventos</h2>
 
-                   
-                    <div class="col-lg-6">
-                        <h3 class="mb-3">Romería de San Isidro 2025</h3>
-                        <p class="text-muted mb-2"><i class="fa fa-calendar"></i> 15 de mayo de 2025 | <i
-                                class="fa fa-map-marker-alt"></i> Ermita de San Isidro</p>
-                        <p class="text-justify">
-                            Celebra con nosotros la tradicional romería en honor a San Isidro Labrador. Una jornada de
-                            convivencia, comida popular, actividades infantiles y misa al aire libre.
-                        </p>
-                        <a href="Controller?operacion=eventoseleccionado&id=1"
-                            class="btn btn-success mt-3 px-4 py-2">Ver evento completo</a>
-                        <c:if test="${usuario.rol == 'admin'}">
-                            
-                        <a href="" id="eliminar-evento" data-id="{evento.id}"
-                            class="btn btn-success mt-3 px-4 py-2">Eliminar Evento</a>
-                        <a href="/Administrador/ActualizarEvento.jsp?id={id}" class="btn btn-success mt-3 px-4 py-2">Actualizar Evento</a>
-
-                        </c:if>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <c:forEach var="evento" items="${ListaEvento}">
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <img src="${evento.imagen}" class="card-img-top" alt="Imagen del evento" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">${evento.titulo}</h5>
+                        <p class="card-text text-truncate">${evento.resumen}</p>
+                        <p class="card-text"><strong>Lugar:</strong> ${evento.lugar}</p>
+                        <p class="card-text mt-auto"><small class="text-muted">Fecha: ${evento.fecha}</small></p>
+                        <div class="mt-3 d-flex justify-content-between">
+                            <a href="ActualizarEvento.jsp?id=${evento.id}" class="btn btn-sm btn-primary">Actualizar</a>
+                            <a href="Controller?operacion=eliminarEvento&id=${evento.id}" class="btn btn-sm btn-danger">Eliminar</a>
+                        </div>
                     </div>
                 </div>
-
-              
-
             </div>
-        </section>
+        </c:forEach>
+    </div>
+
+    <!-- Paginación -->
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            <c:if test="${paginaActual > 1}">
+                <li class="page-item">
+                    <a class="page-link" href="Controller?operacion=listarEventos&page=${paginaActual - 1}">Anterior</a>
+                </li>
+            </c:if>
+
+            <c:forEach begin="1" end="${totalPaginas}" var="i">
+                <li class="page-item ${i == paginaActual ? 'active' : ''}">
+                    <a class="page-link" href="Controller?operacion=listarEventos&page=${i}">${i}</a>
+                </li>
+            </c:forEach>
+
+            <c:if test="${paginaActual < totalPaginas}">
+                <li class="page-item">
+                    <a class="page-link" href="Controller?operacion=listarEventos&page=${paginaActual + 1}">Siguiente</a>
+                </li>
+            </c:if>
+        </ul>
+    </nav>
+
+</c:if>
+
+<c:if test="${empty ListaEvento}">
+    <h2 class="pt-5 text-center">No hay eventos disponibles</h2>
+    <p class="text-center">Por favor, añade un evento.</p>
+    <div class="text-center">
+        <a href="InsertarEvento.jsp" class="btn btn-primary">Añadir Evento</a>
+    </div>
+</c:if>
+      
 
 
 
@@ -82,7 +105,7 @@
                 btn.addEventListener('click', function () {
                     const id = this.dataset.id;
 
-                    if (!confirm("¿Estás seguro de que quieres eliminar esta Noticia?")) {
+                    if (!confirm("Â¿EstÃ¡s seguro de que quieres eliminar esta Noticia?")) {
                         return;
                     }
 
@@ -91,16 +114,16 @@
                     })
                         .then(response => {
                             if (response.ok) {
-                                alert("✅ Eliminado correctamente.");
+                                alert("â Eliminado correctamente.");
                                 // Puedes eliminar el elemento del DOM si lo deseas:
                                 this.closest('.evento-container')?.remove();
                             } else {
-                                alert("❌ Error al eliminar.");
+                                alert("â Error al eliminar.");
                             }
                         })
                         .catch(error => {
                             console.error("Error:", error);
-                            alert("❌ Error de red.");
+                            alert("â Error de red.");
                         });
                 });
             });
@@ -109,6 +132,10 @@
 
 
     </script>
+    <script src="/Proyecto_final_ayuntamiento_Noez/partescomunes/header.js"   ></script>
+
+    <script src="/Proyecto_final_ayuntamiento_Noez/partescomunes/footer.js"></script>
+    
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

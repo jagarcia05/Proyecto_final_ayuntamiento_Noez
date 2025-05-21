@@ -1,94 +1,113 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
 <head>
-    <title>Ayuntamiento Noez</title>
-    <!-- Required meta tags -->
+    <title>Ayuntamiento Noez - Noticias</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Bootstrap CSS v5.2.1 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-   <link rel="stylesheet" href="/Proyecto_final_ayuntamiento_Noez/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-
-
-
-
-
-
+    <link rel="stylesheet" href="/Proyecto_final_ayuntamiento_Noez/css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 </head>
 
 <body class="bg-beige">
     <header></header>
 
+    <main class="container py-5">
+        <h2 class="text-center mb-5">📰 Lista de Noticias</h2>
 
-    <main>
+        <c:if test="${not empty ListaNoticias}">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <c:forEach var="noticia" items="${ListaNoticias}">
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <img src="${noticia.imagen}" class="card-img-top" alt="Imagen noticia" style="height: 200px; object-fit: cover;">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">${noticia.titulo}</h5>
+                                <p class="text-muted mb-1">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    <fmt:formatDate value="${noticia.fecha}" pattern="dd 'de' MMMM 'de' yyyy" />
+                                    |
+                                    <i class="fa-regular fa-user"></i>
+                                    ${noticia.autor}
+                                </p>
+                                <p class="card-text text-truncate" style="max-height: 4.5em; overflow: hidden;">
+                                    ${noticia.resumen}
+                                </p>
 
+                                <div class="mt-auto d-flex justify-content-between align-items-center">
+                                    <a href="Controller?operacion=noticiaseleccionada&id=${noticia.id}" class="btn btn-primary btn-sm px-3">Leer completa</a>
 
-
-        <section class="ultima-noticia bg-light py-5">
-            <div class="container">
-                <h2 class="text-center mb-5">📰 Lista Noticias</h2>
-
-                <div class="row align-items-center">
-                    <!-- Imagen destacada -->
-                    <div class="col-lg-6 mb-4 mb-lg-0 text-center">
-                        <img src="img/imagen_escudo.png" alt="Imagen de la noticia"
-                            class="img-fluid rounded shadow-lg border border-2 border-primary"
-                            style="max-height: 400px;">
+                                    <c:if test="${usuario.rol == 'admin'}">
+                                        <div>
+                                            <a href="Controller?operacion=EliminarNoticia&id=${noticia.id}" 
+                                               class="btn btn-danger btn-sm me-2 eliminar-noticia" data-id="${noticia.id}">
+                                               Eliminar
+                                            </a>
+                                            <a href="/Administrador/ActualizarNoticia.jsp?id=${noticia.id}" 
+                                               class="btn btn-success btn-sm">Actualizar</a>
+                                        </div>
+                                    </c:if>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <!-- Contenido de la noticia -->
-                    <div class="col-lg-6">
-                        <h3 class="mb-3">Título de la Noticia Más Completa</h3>
-                        <p class="text-muted mb-2"><i class="bi bi-calendar-event"></i> 14 de mayo de 2025 | <i
-                                class="bi bi-person-circle"></i> Redacción Noticias</p>
-                        <p class="text-justify">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque id sapien nec nulla
-                            vulputate
-                            pretium. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
-                            turpis
-                            egestas. In vitae dolor vitae turpis tincidunt laoreet. Vivamus euismod, arcu quis efficitur
-                            tincidunt, lorem sapien convallis quam, et volutpat est lacus ut sem.
-                        </p>
-                        <p class="text-justify">
-                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                            laudantium,
-                            totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
-                            vitae
-                            dicta sunt explicabo.
-                        </p>
-                        <a href="Controller?operacion=noticiaselecionada&id={noticia.id}"
-                            class="btn btn-primary mt-3 px-4 py-2">Leer noticia completa</a>
-                        <c:if test="${usuario.rol == 'admin'}">
-
-                            <a href="Controller?operacion=EliminarNoticia&id=1" id="eliminar-Noticia"
-                                data-id="{noticia.id}" class="btn btn-success mt-3 px-4 py-2">Eliminar Noticia</a>
-                           <a href="/Administrador/ActualizarNoticia.jsp?id={id}" class="btn btn-success mt-3 px-4 py-2">Actualizar Noticia</a>
-                        </c:if>
-                    </div>
-                </div>
+                </c:forEach>
             </div>
-        </section>
 
+            <!-- Paginación -->
+            <nav aria-label="Paginación noticias" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <c:if test="${paginaActual > 1}">
+                        <li class="page-item">
+                            <a class="page-link" href="Controller?operacion=listarNoticias&page=${paginaActual - 1}">Anterior</a>
+                        </li>
+                    </c:if>
 
+                    <c:forEach begin="1" end="${totalPaginas}" var="i">
+                        <li class="page-item ${i == paginaActual ? 'active' : ''}">
+                            <a class="page-link" href="Controller?operacion=listarNoticias&page=${i}">${i}</a>
+                        </li>
+                    </c:forEach>
 
+                    <c:if test="${paginaActual < totalPaginas}">
+                        <li class="page-item">
+                            <a class="page-link" href="Controller?operacion=listarNoticias&page=${paginaActual + 1}">Siguiente</a>
+                        </li>
+                    </c:if>
+                </ul>
+            </nav>
+
+        </c:if>
+
+        <c:if test="${empty ListaNoticias}">
+            <h3 class="text-center mt-5">No hay noticias disponibles</h3>
+            <p class="text-center">Por favor, añade alguna noticia.</p>
+            <div class="text-center">
+                <a href="InsertarNoticia.jsp" class="btn btn-primary">Añadir Noticia</a>
+            </div>
+        </c:if>
     </main>
+
     <footer></footer>
-    <script src="../partescomunes/footer.js"></script>
+<script src="../partescomunes/footer.js"></script>
     <script src="../partescomunes/header.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('.eliminar-Noticia').forEach(btn => {
-                btn.addEventListener('click', function () {
+            document.querySelectorAll('.eliminar-noticia').forEach(btn => {
+                btn.addEventListener('click', function (event) {
+                    event.preventDefault();
                     const id = this.dataset.id;
 
-                    if (!confirm("¿Estás seguro de que quieres eliminar esta Noticia?")) {
+                    if (!confirm("¿Estás seguro de que quieres eliminar esta noticia?")) {
                         return;
                     }
 
@@ -97,36 +116,24 @@
                     })
                         .then(response => {
                             if (response.ok) {
-                                alert("✅ Eliminado correctamente.");
-                                // Puedes eliminar el elemento del DOM si lo deseas:
-                                this.closest('.evento-container')?.remove();
+                                alert("✓ Eliminado correctamente.");
+                                // Aquí podrías recargar la página o eliminar la card del DOM:
+                                location.reload();
                             } else {
-                                alert("❌ Error al eliminar.");
+                                alert("✗ Error al eliminar.");
                             }
                         })
                         .catch(error => {
                             console.error("Error:", error);
-                            alert("❌ Error de red.");
+                            alert("✗ Error de red.");
                         });
                 });
             });
         });
-
-
-
     </script>
 
-    <!-- Bootstrap JavaScript Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

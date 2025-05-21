@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import model.Eventos;
 import model.Noticias;
 
 import java.io.File;
@@ -18,7 +19,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 
+import java.util.Base64;
+
+import Daos.DaoEventos;
 import Daos.NoticiasDao;
 import jakarta.servlet.annotation.MultipartConfig;
 
@@ -46,8 +56,11 @@ public class Controller extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String operacion = request.getParameter("op");
-		
+		String operacion = request.getParameter("Operacion");
+		String apiKey = "e5c4c04ed5f5042498c1ed3d7fbb4924";
+		   String pageParam = "";
+	    int page = 1; // página por defecto
+	    int recordsPerPage = 5; // noticias por página
 		switch (operacion) {
 		case "inicio":
 			request.getRequestDispatcher("index.html").forward(request, response);
@@ -63,21 +76,13 @@ public class Controller extends HttpServlet {
 		    String contenidoCompleto = request.getParameter("contenidoCompleto");
 
 		    Part filePart = request.getPart("imagen");
-		    String nombreArchivo = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+		    InputStream inputStream1 = filePart.getInputStream();
+		    byte[] bytes1 = inputStream1.readAllBytes();
+		    String base64Image1 = Base64.getEncoder().encodeToString(bytes1);
 
-		    String rutaDestino = "D:\\appDiurno\\imagenes-noticias"; 
-		    File carpetaDestino = new File(rutaDestino);
-		    if (!carpetaDestino.exists()) {
-		        carpetaDestino.mkdirs(); // Crear carpeta si no existe
-		    }
-
-		    // Guardar el archivo con InputStream y Files.copy
-		    try (InputStream input = filePart.getInputStream()) {
-		        Files.copy(input, Paths.get(rutaDestino, nombreArchivo), StandardCopyOption.REPLACE_EXISTING);
-		    } catch (IOException e) {
-		        e.printStackTrace();
-		        // Aquí podrías lanzar excepción o gestionar error
-		    }
+		    // Subir a ImgBB
+		    
+		    String imageUrl1 = subirAImgBB(apiKey, base64Image1);
 
 		    Noticias noticia = new Noticias();
 		    noticia.setTitulo(titulo);
@@ -85,13 +90,121 @@ public class Controller extends HttpServlet {
 		    noticia.setAutor(autor);
 		    noticia.setResumen(resumen);
 		    noticia.setContenidoCompleto(contenidoCompleto);
-		    noticia.setImagen(rutaDestino+"/"+nombreArchivo);
+		    noticia.setImagen(imageUrl1); // URL de ImgBB);
 
 		    NoticiasDao daoNoticia = new NoticiasDao();
 		    daoNoticia.guardarNoticias(noticia);    
 
 		    request.getRequestDispatcher("Administrador/Admin.html").forward(request, response);
 		    break;
+		case "insertarEvento":
+		    String tituloEvento = request.getParameter("tituloEvento");
+		    String fechaStr1 = request.getParameter("fechaEvento");
+		    LocalDate localdate1 = LocalDate.parse(fechaStr1, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		    Date fechaEvento = java.sql.Date.valueOf(localdate1);
+		    String Lugar = request.getParameter("lugarEvento");
+		    String resumenEvento = request.getParameter("resumenEvento");
+		    String DescripcionCompleta = request.getParameter("descripcionCompletaEvento");
+
+		    // Leer la imagen del formulario
+		    Part filePart1 = request.getPart("imagenEvento");
+		    InputStream inputStream = filePart1.getInputStream();
+		    byte[] bytes = inputStream.readAllBytes();
+		    String base64Image = Base64.getEncoder().encodeToString(bytes);
+
+		    // Subir a ImgBB
+		   
+		    String imageUrl = subirAImgBB(apiKey, base64Image);
+
+		    // Guardar en la base de datos
+		    Eventos evento = new Eventos();
+		    evento.setTitulo(tituloEvento);
+		    evento.setFecha(fechaEvento);
+		    evento.setLugar(Lugar);
+		    evento.setResumen(resumenEvento);
+		    evento.setDescripcionCompleta(DescripcionCompleta);
+		    evento.setImagen(imageUrl); // URL de ImgBB
+
+		    DaoEventos daoEvento = new DaoEventos();
+		    daoEvento.guardarEventoss(evento);
+
+		    request.getRequestDispatcher("Administrador/Admin.html").forward(request, response);
+		    break;
+
+		
+
+
+
+		case "listarEventos":
+		    DaoEventos daoEventos = new DaoEventos();
+		    
+		    pageParam = request.getParameter("page");
+		    if (pageParam != null) {
+		        try {
+		            page = Integer.parseInt(pageParam);
+		            if (page < 1) page = 1;
+		        } catch (NumberFormatException e) {
+		            page = 1;
+		        }
+		    }
+
+		    List<Eventos> todosEventos = daoEventos.obtenerTodosLosEventoss();
+		    int totalRecords = todosEventos.size();
+		    int totalPages = (int) Math.ceil(totalRecords * 1.0 / recordsPerPage);
+
+		    // Calcular índices de paginación
+		    int startIndex = (page - 1) * recordsPerPage;
+		    int endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
+
+		    List<Eventos> eventosPagina = todosEventos.subList(startIndex, endIndex);
+
+		    request.setAttribute("ListaEvento", eventosPagina);
+		    request.setAttribute("paginaActual", page);
+		    request.setAttribute("totalPaginas", totalPages);
+
+		    request.getRequestDispatcher("informacion/Eventos.jsp").forward(request, response);
+		    break;
+		
+		case "listaNoticias":
+		    NoticiasDao daoNoticias = new NoticiasDao();
+
+
+		    pageParam = request.getParameter("page");
+		    if (pageParam != null) {
+		        try {
+		            page = Integer.parseInt(pageParam);
+		            if (page < 1) page = 1;
+		        } catch (NumberFormatException e) {
+		            page = 1;
+		        }
+		    }
+
+		    // Obtener todas las noticias (mejor paginar con SQL en producción)
+		    List<Noticias> todasNoticias = daoNoticias.obtenerTodasLasNoticiass();
+
+		    int totalRecords1 = todasNoticias.size();
+		    int totalPages1 = (int) Math.ceil((double) totalRecords1 / recordsPerPage);
+
+		    int startIndex1 = (page - 1) * recordsPerPage;
+		    int endIndex1 = Math.min(startIndex1 + recordsPerPage, totalRecords1);
+
+		    // Validar índices para evitar errores
+		    if (startIndex1 > endIndex1) {
+		        startIndex = 0;
+		        page = 1;
+		    }
+
+		    List<Noticias> noticiasPagina = todasNoticias.subList(startIndex1, endIndex1);
+
+		    request.setAttribute("ListaNoticias", noticiasPagina);
+		    request.setAttribute("paginaActual", page);
+		    request.setAttribute("totalPaginas", totalPages1);
+
+		    request.getRequestDispatcher("informacion/noticias.jsp").forward(request, response);
+		    break;
+
+
+		    
 		}
 
 		
@@ -104,5 +217,54 @@ public class Controller extends HttpServlet {
 		// TODO Auto-generated method stub
 	doPost(request, response);
 	}
+	
+		
+
+	private String subirAImgBB(String apiKey, String base64Image) {
+	    try {
+	        URL url = new URL("https://api.imgbb.com/1/upload");
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("POST");
+	        conn.setDoOutput(true);
+	        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+	        // Construye el cuerpo de la petición con URL encoding
+	        String data = "key=" + URLEncoder.encode(apiKey, "UTF-8") +
+	                      "&image=" + URLEncoder.encode(base64Image, "UTF-8");
+
+	        try (OutputStream os = conn.getOutputStream()) {
+	            os.write(data.getBytes());
+	        }
+
+	        int responseCode = conn.getResponseCode();
+
+	        InputStream responseStream = responseCode == 200 ?
+	            conn.getInputStream() : conn.getErrorStream();
+
+	        Scanner scanner = new Scanner(responseStream);
+	        StringBuilder responseBody = new StringBuilder();
+	        while (scanner.hasNext()) {
+	            responseBody.append(scanner.nextLine());
+	        }
+	        scanner.close();
+
+	        String json = responseBody.toString();
+
+	        // Aquí parseamos la URL con una búsqueda simple, para producción usa librería JSON
+	        int start = json.indexOf("\"url\":\"") + 7;
+	        int end = json.indexOf("\"", start);
+	        if (start < 7 || end < 0) {
+	            System.err.println("No se encontró URL en la respuesta: " + json);
+	            return null;
+	        }
+	        return json.substring(start, end).replace("\\/", "/");
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
+
+
 
 }

@@ -44,11 +44,11 @@
         </div>
     </div>
 
-    <main class="container py-5">
-        <h2 class="text-center">📝 Insertar Noticia</h2>
+	    <main class="container py-5">
+	        <h2 class="text-center">📝 Insertar Noticia</h2>
       <form id="form-noticia" action="/Proyecto_final_ayuntamiento_Noez/Controller" method="Post" enctype="multipart/form-data">
       
-            <input type="hidden" name="op" value="insertarNoticia">
+            <input type="hidden" name="Operacion" value="insertarNoticia">
 
             <div class="mb-3">
                 <label for="titulo" class="form-label">Título</label>
@@ -83,45 +83,46 @@
 
             <button type="submit" class="btn btn-primary">Guardar Noticia</button>
         </form>
-
-        <h2 class="pt-5 text-center">📆 Insertar Evento</h2>
-        <form action="Controller" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="operacion" value="insertarEvento">
-
-            <div class="mb-3">
-                <label for="titulo-evento" class="form-label">Título del evento</label>
-                <input type="text" class="form-control" id="titulo-evento" name="titulo" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="fecha-evento" class="form-label">Fecha</label>
-                <input type="date" class="form-control" id="fecha-evento" name="fecha" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="lugar-evento" class="form-label">Lugar</label>
-                <input type="text" class="form-control" id="lugar-evento" name="lugar" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="imagen-evento" class="form-label">Imagen (JPG/PNG)</label>
-                <input type="file" class="form-control" id="imagen-evento" name="imagen" accept="image/*" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="resumen-evento" class="form-label">Resumen</label>
-                <textarea class="form-control" id="resumen-evento" name="resumen-evento" rows="3" required></textarea>
-            </div>
-
-            <div class="mb-3">
-                <label for="contenido-evento" class="form-label">Descripción completa</label>
-                <textarea class="form-control" id="contenido-evento" name="descripcionCompleta" rows="6"
-                    required></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-success">Guardar Evento</button>
-        </form>
-    </main>
+	
+		        <h2 class="pt-5 text-center">📆 Insertar Evento</h2>
+		        <form id="form-evento" action="/Proyecto_final_ayuntamiento_Noez/Controller" method="post" enctype="multipart/form-data">
+		      
+		            <input type="hidden" name="Operacion" value="insertarEvento">
+		
+		            <div class="mb-3">
+		                <label for="titulo-evento" class="form-label">Título del evento</label>
+		                <input type="text" class="form-control" id="titulo-evento" name="tituloEvento" required>
+		            </div>
+		
+		            <div class="mb-3">
+		                <label for="fecha-evento" class="form-label">Fecha</label>
+		                <input type="date" class="form-control" id="fecha-evento" name="fechaEvento" required>
+		            </div>
+		
+		            <div class="mb-3">
+		                <label for="lugar-evento" class="form-label">Lugar</label>
+		                <input type="text" class="form-control" id="lugar-evento" name="lugarEvento" required>
+		            </div>
+		
+		            <div class="mb-3">
+		                <label for="imagen-evento" class="form-label">Imagen (JPG/PNG)</label>
+		                <input type="file" class="form-control" id="imagen-evento" name="imagenEvento" accept="image/*" required>
+		            </div>
+		
+		            <div class="mb-3">
+		                <label for="resumen-evento" class="form-label">Resumen</label>
+		                <textarea class="form-control" id="resumen-evento" name="resumenEvento" rows="3" required></textarea>
+		            </div>
+		
+		            <div class="mb-3">
+		                <label for="contenido-evento" class="form-label">Descripción completa</label>
+		                <textarea class="form-control" id="contenido-evento" name="descripcionCompletaEvento" rows="6"
+		                    required></textarea>
+		            </div>
+		
+		            <button type="submit" class="btn btn-success">Guardar Evento</button>
+		        </form>
+	    </main>
 
     <footer></footer>
     <script src="../partescomunes/footer.js"></script>

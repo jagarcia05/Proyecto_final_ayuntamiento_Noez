@@ -8,7 +8,7 @@
 			
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
-			<property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/AyuntamientoNoez"/>
+			<property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3307/AyuntamientoNoez"/>
 			<property name="jakarta.persistence.jdbc.user" value="noez_user"/>
 			<property name="jakarta.persistence.jdbc.password" value="Cpl10031974@"/>
 			<property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
