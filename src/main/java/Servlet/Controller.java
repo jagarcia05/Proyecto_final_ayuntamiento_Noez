@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import model.Eventos;
 import model.Noticias;
+import model.Usuario;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +30,7 @@ import java.net.URLEncoder;
 import java.util.Base64;
 
 import Daos.DaoEventos;
+import Daos.DaoUsuario;
 import Daos.NoticiasDao;
 import jakarta.servlet.annotation.MultipartConfig;
 
@@ -56,7 +58,9 @@ public class Controller extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String operacion = request.getParameter("Operacion");
+		String operacion = request.getParameter("operacion");
+		System.out.println(operacion);
+		
 		String apiKey = "e5c4c04ed5f5042498c1ed3d7fbb4924";
 		   String pageParam = "";
 	    int page = 1; // página por defecto
@@ -202,6 +206,46 @@ public class Controller extends HttpServlet {
 
 		    request.getRequestDispatcher("informacion/noticias.jsp").forward(request, response);
 		    break;
+		case "EventoSeleccionado":
+			int idEvento = Integer.parseInt(request.getParameter("id"));
+			DaoEventos daoEventos1 = new DaoEventos();
+			Eventos eventoSeleccionado = daoEventos1.obtenerEventosPorId(idEvento);
+			request.setAttribute("eventoSeleccionado", eventoSeleccionado);
+			request.getRequestDispatcher("informacion/Evento.jsp").forward(request, response);
+			break;
+		case "noticiaseleccionada":
+			int idNoticia = Integer.parseInt(request.getParameter("id"));
+			NoticiasDao daoNoticia1 = new NoticiasDao();
+			Noticias noticiaSeleccionada = daoNoticia1.obtenerNoticiasPorId(idNoticia);
+			request.setAttribute("noticiaSeleccionada", noticiaSeleccionada);
+			request.getRequestDispatcher("informacion/noticia.jsp").forward(request, response);
+			break;
+		case "login1":
+		    String usuarioNombre = request.getParameter("usuario");
+		    String password = request.getParameter("contrasena");
+
+		    DaoUsuario daoUsuario = new DaoUsuario();
+		    Usuario usuarioEncontrado = daoUsuario.obtenerUsuarioPorNombre(usuarioNombre);
+
+		    response.setContentType("application/json");
+		    PrintWriter out = response.getWriter();
+
+		    if (usuarioEncontrado != null && usuarioEncontrado.getPassword().equals(password)) {
+		        out.print("{");
+		        out.print("\"success\": true,");
+		        out.print("\"rol\": \"" + "admin" + "\",");
+		        out.print("\"nombre\": \"" + usuarioEncontrado.getNombre() + "\"");
+		        out.print("}");
+		    } else {
+		        out.print("{");
+		        out.print("\"success\": false,");
+		        out.print("\"message\": \"Usuario o contraseña incorrectos.\"");
+		        out.print("}");
+		    }
+		    out.flush();
+		    break;
+
+
 
 
 		    

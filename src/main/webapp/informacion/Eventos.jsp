@@ -33,6 +33,11 @@
 
       <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+
+
+
+
+
 <c:if test="${not empty ListaEvento}">
     <h2 class="pt-5 text-center mb-4">📝 Lista de Eventos</h2>
 
@@ -45,10 +50,24 @@
                         <h5 class="card-title">${evento.titulo}</h5>
                         <p class="card-text text-truncate">${evento.resumen}</p>
                         <p class="card-text"><strong>Lugar:</strong> ${evento.lugar}</p>
-                        <p class="card-text mt-auto"><small class="text-muted">Fecha: ${evento.fecha}</small></p>
-                        <div class="mt-3 d-flex justify-content-between">
-                            <a href="ActualizarEvento.jsp?id=${evento.id}" class="btn btn-sm btn-primary">Actualizar</a>
-                            <a href="Controller?operacion=eliminarEvento&id=${evento.id}" class="btn btn-sm btn-danger">Eliminar</a>
+                        <p class="card-text"><small class="text-muted">Fecha: ${evento.fecha}</small></p>
+
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <a href="Controller?operacion=EventoSeleccionado&id=${evento.id}" class="btn btn-primary btn-sm px-3">Leer completa</a>
+
+                            <c:if test="${usuario.rol == 'admin'}">
+                                <div>
+                                    <a href="" data-id="eliminar-Evento"
+                                       class="btn btn-danger btn-sm me-2 eliminar-evento" 
+                                       >
+                                        Eliminar
+                                    </a>
+                                    <a href="/Administrador/ActualizarEvento.jsp?id=${evento.id}" 
+                                       class="btn btn-success btn-sm">
+                                        Actualizar
+                                    </a>
+                                </div>
+                            </c:if>
                         </div>
                     </div>
                 </div>
@@ -78,7 +97,6 @@
             </c:if>
         </ul>
     </nav>
-
 </c:if>
 
 <c:if test="${empty ListaEvento}">
@@ -88,17 +106,12 @@
         <a href="InsertarEvento.jsp" class="btn btn-primary">Añadir Evento</a>
     </div>
 </c:if>
-      
-
-
-
-
 
 
     </main>
     <footer></footer>
-    <script src="../partescomunes/footer.js"></script>
-    <script src="../partescomunes/header.js"></script>
+    <script src="/Proyecto_final_ayuntamiento_Noez/partescomunes/footer.js"></script>
+    <script src="/Proyecto_final_ayuntamiento_Noez/partescomunes/header.js"></script>
   <script>
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('.eliminar-Evento').forEach(btn => {

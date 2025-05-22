@@ -48,7 +48,7 @@
 
                                     <c:if test="${usuario.rol == 'admin'}">
                                         <div>
-                                            <a href="Controller?operacion=EliminarNoticia&id=${noticia.id}" 
+                                            <a href="" data-id="eliminar-noticia"
                                                class="btn btn-danger btn-sm me-2 eliminar-noticia" data-id="${noticia.id}">
                                                Eliminar
                                             </a>
@@ -68,19 +68,19 @@
                 <ul class="pagination justify-content-center">
                     <c:if test="${paginaActual > 1}">
                         <li class="page-item">
-                            <a class="page-link" href="Controller?operacion=listarNoticias&page=${paginaActual - 1}">Anterior</a>
+                            <a class="page-link" href="Controller?operacion=listaNoticias&page=${paginaActual - 1}">Anterior</a>
                         </li>
                     </c:if>
 
                     <c:forEach begin="1" end="${totalPaginas}" var="i">
                         <li class="page-item ${i == paginaActual ? 'active' : ''}">
-                            <a class="page-link" href="Controller?operacion=listarNoticias&page=${i}">${i}</a>
+                            <a class="page-link" href="Controller?operacion=listaNoticias=&page=${i}">${i}</a>
                         </li>
                     </c:forEach>
 
                     <c:if test="${paginaActual < totalPaginas}">
                         <li class="page-item">
-                            <a class="page-link" href="Controller?operacion=listarNoticias&page=${paginaActual + 1}">Siguiente</a>
+                            <a class="page-link" href="Controller?operacion=listaNoticias&page=${paginaActual + 1}">Siguiente</a>
                         </li>
                     </c:if>
                 </ul>
@@ -98,8 +98,8 @@
     </main>
 
     <footer></footer>
-<script src="../partescomunes/footer.js"></script>
-    <script src="../partescomunes/header.js"></script>
+  <script src="/Proyecto_final_ayuntamiento_Noez/partescomunes/footer.js"></script>
+    <script src="/Proyecto_final_ayuntamiento_Noez/partescomunes/header.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.eliminar-noticia').forEach(btn => {
