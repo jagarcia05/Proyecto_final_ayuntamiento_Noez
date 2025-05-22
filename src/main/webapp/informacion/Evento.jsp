@@ -13,7 +13,7 @@
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-     <link rel="stylesheet" href="css/style.css">
+     <link rel="stylesheet" href="/css/estilos.css">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -43,7 +43,7 @@
 						<p class="card-text">
 							<small class="text-muted">Fecha: ${evento.fecha}</small>
 						</p>
-						<a href="ActualizarEvento.jsp?id=${evento.id}"
+						<a href="/Administrador/ActualizarEvento.jsp?id=${evento.id}"
 							class="btn btn-primary">Actualizar</a>
 						<a href="Controller?operacion=eliminarEvento&id=${evento.id}"
 						    class="btn btn-danger">Eliminar</a>
@@ -53,8 +53,8 @@
 					</c:if>
 	</main>
     <footer></footer>
-    <script src="../partescomunes/footer.js"></script>
-    <script src="../partescomunes/header.js"></script>
+    <script src="/partescomunes/footer.js"></script>
+    <script src="/partescomunes/header.js"></script>
 
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
