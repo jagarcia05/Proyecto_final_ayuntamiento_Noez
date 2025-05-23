@@ -6,42 +6,50 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the eventos database table.
+ * The persistent class for the noticias database table.
  * 
  */
 @Entity
-@NamedQuery(name="Eventos.findAll", query="SELECT e FROM Eventos e")
-public class Eventos implements Serializable {
+@Table(name="noticias")
+@NamedQuery(name="Noticia.findAll", query="SELECT n FROM Noticia n")
+public class Noticia implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private String autor;
+
 	@Lob
-	private String descripcionCompleta;
+	private String contenidoCompleto;
 
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Lob
 	private String imagen;
-
-	private String lugar;
 
 	@Lob
 	private String resumen;
 
 	private String titulo;
 
-	public Eventos() {
+	public Noticia() {
 	}
 
-	public String getDescripcionCompleta() {
-		return this.descripcionCompleta;
+	public String getAutor() {
+		return this.autor;
 	}
 
-	public void setDescripcionCompleta(String descripcionCompleta) {
-		this.descripcionCompleta = descripcionCompleta;
+	public void setAutor(String autor) {
+		this.autor = autor;
+	}
+
+	public String getContenidoCompleto() {
+		return this.contenidoCompleto;
+	}
+
+	public void setContenidoCompleto(String contenidoCompleto) {
+		this.contenidoCompleto = contenidoCompleto;
 	}
 
 	public Date getFecha() {
@@ -66,14 +74,6 @@ public class Eventos implements Serializable {
 
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
-	}
-
-	public String getLugar() {
-		return this.lugar;
-	}
-
-	public void setLugar(String lugar) {
-		this.lugar = lugar;
 	}
 
 	public String getResumen() {

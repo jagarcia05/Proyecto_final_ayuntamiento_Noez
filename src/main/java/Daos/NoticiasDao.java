@@ -2,14 +2,15 @@ package Daos;
 import java.util.List;
 
 import jakarta.persistence.EntityManager;
-import model.Noticias;
+import model.Noticia;
+
 
 public class NoticiasDao {
 	
-	public List<Noticias> obtenerTodasLasNoticiass() {
+	public List<Noticia> obtenerTodasLasNoticiass() {
 	EntityManager em = BaseJPADao.getEntityManager();
 	em.getTransaction().begin();
-	List<Noticias> noticias = em.createQuery("SELECT n FROM Noticias n", Noticias.class).getResultList();
+	List<Noticia> noticias = em.createQuery("SELECT n FROM Noticia n", Noticia.class).getResultList();
 	em.getTransaction().commit();
 	
 	
@@ -17,22 +18,22 @@ public class NoticiasDao {
 	return noticias;
     }
 	
-	public Noticias obtenerNoticiasPorId(int id) {
+	public Noticia obtenerNoticiasPorId(int id) {
 		EntityManager em = BaseJPADao.getEntityManager();
         em.getTransaction().begin();
-        Noticias noticia = em.find(Noticias.class, id);
+        Noticia noticia = em.find(Noticia.class, id);
         em.getTransaction().commit();
         em.close();
         return noticia;
     }
-	public void guardarNoticias(Noticias Noticias) {
+	public void guardarNoticias(Noticia Noticias) {
 		EntityManager em = BaseJPADao.getEntityManager();
         em.getTransaction().begin();
         em.persist(Noticias);
         em.getTransaction().commit();
         em.close();
     }
-	public void actualizarNoticias(Noticias Noticias) {
+	public void actualizarNoticias(Noticia Noticias) {
 		EntityManager em = BaseJPADao.getEntityManager();
         em.getTransaction().begin();
         em.merge(Noticias);
@@ -42,7 +43,7 @@ public class NoticiasDao {
 	public void eliminarNoticias(int id) {
 		EntityManager em = BaseJPADao.getEntityManager();
 		em.getTransaction().begin();
-		Noticias Noticias = em.find(Noticias.class, id);
+		Noticia Noticias = em.find(Noticia.class, id);
 		if (Noticias != null) {
 			em.remove(Noticias);
 		}

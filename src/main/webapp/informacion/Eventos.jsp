@@ -12,7 +12,7 @@
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-    <link rel="stylesheet" href="/Proyecto_final_ayuntamiento_Noez/css/style.css">
+     <link rel="stylesheet" href="/Proyecto_final_ayuntamiento_Noez/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -55,8 +55,8 @@
                         <div class="mt-auto d-flex justify-content-between align-items-center">
                             <a href="Controller?operacion=EventoSeleccionado&id=${evento.id}" class="btn btn-primary btn-sm px-3">Leer completa</a>
 
-                            <c:if test="${usuario.rol == 'admin'}">
-                                <div>
+                            
+                                <div class ="d-none" id="Evento-admin">
                                     <a href="" data-id="eliminar-Evento"
                                        class="btn btn-danger btn-sm me-2 eliminar-evento" 
                                        >
@@ -67,7 +67,7 @@
                                         Actualizar
                                     </a>
                                 </div>
-                            </c:if>
+                            
                         </div>
                     </div>
                 </div>
@@ -110,8 +110,13 @@
 
     </main>
     <footer></footer>
+
     <script src="/Proyecto_final_ayuntamiento_Noez/partescomunes/footer.js"></script>
     <script src="/Proyecto_final_ayuntamiento_Noez/partescomunes/header.js"></script>
+
+    <script src="/partescomunes/footer.js"></script>
+    <script src="/partescomunes/header.js"></script>
+
   <script>
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('.eliminar-Evento').forEach(btn => {

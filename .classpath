@@ -19,6 +19,10 @@
 			<attribute name="owner.project.facets" value="jpt.jpa"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/appDiurno/eclipse-workspace/jpa/Proyecto_final_ayuntamiento_Noez/src/main/webapp/WEB-INF/lib/mysql-connector-j-9.2.0.jar"/>
+	<classpathentry kind="lib" path="D:/appDiurno/PAYARA/payara6/glassfish/domains/domain1/lib/ext/mysql-connector-j-8.3.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

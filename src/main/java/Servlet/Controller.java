@@ -6,8 +6,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-import model.Eventos;
-import model.Noticias;
+import model.Evento;
+
+import model.Noticia;
+
 import model.Usuario;
 
 import java.io.File;
@@ -88,7 +90,7 @@ public class Controller extends HttpServlet {
 		    
 		    String imageUrl1 = subirAImgBB(apiKey, base64Image1);
 
-		    Noticias noticia = new Noticias();
+		    Noticia noticia = new Noticia();
 		    noticia.setTitulo(titulo);
 		    noticia.setFecha(fecha);
 		    noticia.setAutor(autor);
@@ -121,7 +123,7 @@ public class Controller extends HttpServlet {
 		    String imageUrl = subirAImgBB(apiKey, base64Image);
 
 		    // Guardar en la base de datos
-		    Eventos evento = new Eventos();
+		    Evento evento = new Evento();
 		    evento.setTitulo(tituloEvento);
 		    evento.setFecha(fechaEvento);
 		    evento.setLugar(Lugar);
@@ -152,7 +154,7 @@ public class Controller extends HttpServlet {
 		        }
 		    }
 
-		    List<Eventos> todosEventos = daoEventos.obtenerTodosLosEventoss();
+		    List<Evento> todosEventos = daoEventos.obtenerTodosLosEventoss();
 		    int totalRecords = todosEventos.size();
 		    int totalPages = (int) Math.ceil(totalRecords * 1.0 / recordsPerPage);
 
@@ -160,7 +162,7 @@ public class Controller extends HttpServlet {
 		    int startIndex = (page - 1) * recordsPerPage;
 		    int endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
 
-		    List<Eventos> eventosPagina = todosEventos.subList(startIndex, endIndex);
+		    List<Evento> eventosPagina = todosEventos.subList(startIndex, endIndex);
 
 		    request.setAttribute("ListaEvento", eventosPagina);
 		    request.setAttribute("paginaActual", page);
@@ -184,7 +186,7 @@ public class Controller extends HttpServlet {
 		    }
 
 		    // Obtener todas las noticias (mejor paginar con SQL en producción)
-		    List<Noticias> todasNoticias = daoNoticias.obtenerTodasLasNoticiass();
+		    List<Noticia> todasNoticias = daoNoticias.obtenerTodasLasNoticiass();
 
 		    int totalRecords1 = todasNoticias.size();
 		    int totalPages1 = (int) Math.ceil((double) totalRecords1 / recordsPerPage);
@@ -198,7 +200,7 @@ public class Controller extends HttpServlet {
 		        page = 1;
 		    }
 
-		    List<Noticias> noticiasPagina = todasNoticias.subList(startIndex1, endIndex1);
+		    List<Noticia> noticiasPagina = todasNoticias.subList(startIndex1, endIndex1);
 
 		    request.setAttribute("ListaNoticias", noticiasPagina);
 		    request.setAttribute("paginaActual", page);
@@ -209,27 +211,29 @@ public class Controller extends HttpServlet {
 		case "EventoSeleccionado":
 			int idEvento = Integer.parseInt(request.getParameter("id"));
 			DaoEventos daoEventos1 = new DaoEventos();
-			Eventos eventoSeleccionado = daoEventos1.obtenerEventosPorId(idEvento);
+			Evento eventoSeleccionado = daoEventos1.obtenerEventosPorId(idEvento);
 			request.setAttribute("eventoSeleccionado", eventoSeleccionado);
 			request.getRequestDispatcher("informacion/Evento.jsp").forward(request, response);
 			break;
 		case "noticiaseleccionada":
 			int idNoticia = Integer.parseInt(request.getParameter("id"));
 			NoticiasDao daoNoticia1 = new NoticiasDao();
-			Noticias noticiaSeleccionada = daoNoticia1.obtenerNoticiasPorId(idNoticia);
+			Noticia noticiaSeleccionada = daoNoticia1.obtenerNoticiasPorId(idNoticia);
 			request.setAttribute("noticiaSeleccionada", noticiaSeleccionada);
 			request.getRequestDispatcher("informacion/noticia.jsp").forward(request, response);
 			break;
 		case "login1":
 		    String usuarioNombre = request.getParameter("usuario");
 		    String password = request.getParameter("contrasena");
-
+		    
+		    
+		    
 		    DaoUsuario daoUsuario = new DaoUsuario();
 		    Usuario usuarioEncontrado = daoUsuario.obtenerUsuarioPorNombre(usuarioNombre);
 
 		    response.setContentType("application/json");
 		    PrintWriter out = response.getWriter();
-
+		    
 		    if (usuarioEncontrado != null && usuarioEncontrado.getPassword().equals(password)) {
 		        out.print("{");
 		        out.print("\"success\": true,");
