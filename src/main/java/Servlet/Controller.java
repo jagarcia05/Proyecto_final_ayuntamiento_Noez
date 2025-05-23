@@ -60,14 +60,26 @@ public class Controller extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String operacion = request.getParameter("operacion");
 		System.out.println(operacion);
-		
+		NoticiasDao daoNoticia = new NoticiasDao();
+		 DaoEventos daoEventos = new DaoEventos();
+		Eventos evento = new Eventos();
 		String apiKey = "e5c4c04ed5f5042498c1ed3d7fbb4924";
 		   String pageParam = "";
 	    int page = 1; // página por defecto
 	    int recordsPerPage = 5; // noticias por página
 		switch (operacion) {
 		case "inicio":
-			request.getRequestDispatcher("index.html").forward(request, response);
+			 evento = new Eventos();
+			 daoEventos = new DaoEventos();
+			evento = daoEventos.obtenerUltimoEvento();
+			Noticias noticia1 = new Noticias();
+			daoNoticia = new NoticiasDao();
+			noticia1 = daoNoticia.obtenerUltimaNoticia();
+			
+			request.setAttribute("evento", evento);
+			request.setAttribute("noticia", noticia1);
+			
+			request.getRequestDispatcher("index.jsp").forward(request, response);
 			break;	
 		
 		case "insertarNoticia":
@@ -96,7 +108,7 @@ public class Controller extends HttpServlet {
 		    noticia.setContenidoCompleto(contenidoCompleto);
 		    noticia.setImagen(imageUrl1); // URL de ImgBB);
 
-		    NoticiasDao daoNoticia = new NoticiasDao();
+		     daoNoticia = new NoticiasDao();
 		    daoNoticia.guardarNoticias(noticia);    
 
 		    request.getRequestDispatcher("Administrador/Admin.html").forward(request, response);
@@ -121,7 +133,7 @@ public class Controller extends HttpServlet {
 		    String imageUrl = subirAImgBB(apiKey, base64Image);
 
 		    // Guardar en la base de datos
-		    Eventos evento = new Eventos();
+		     evento = new Eventos();
 		    evento.setTitulo(tituloEvento);
 		    evento.setFecha(fechaEvento);
 		    evento.setLugar(Lugar);
@@ -140,7 +152,7 @@ public class Controller extends HttpServlet {
 
 
 		case "listarEventos":
-		    DaoEventos daoEventos = new DaoEventos();
+		     daoEventos = new DaoEventos();
 		    
 		    pageParam = request.getParameter("page");
 		    if (pageParam != null) {
@@ -244,6 +256,20 @@ public class Controller extends HttpServlet {
 		    }
 		    out.flush();
 		    break;
+		 case "EliminarNoticia":
+			 // Obtener el ID de la noticia a eliminar desde la solicitud
+				int idNoticiaEliminar = Integer.parseInt(request.getParameter("id"));
+				System.out.println("el id es"+idNoticiaEliminar);
+				NoticiasDao daNoticia = new NoticiasDao();
+				daNoticia.eliminarNoticias(idNoticiaEliminar);
+				
+				break;
+		 case "EliminarEvento":
+			    int idEventoEliminar1 = Integer.parseInt(request.getParameter("id"));
+			    DaoEventos daEventos = new DaoEventos();
+			    daEventos.eliminarEventos(idEventoEliminar1);
+			    break;
+
 
 
 

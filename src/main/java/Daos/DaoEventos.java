@@ -22,6 +22,36 @@ public class DaoEventos {
 		return Eventos;
 	}
 
+	public Eventos obtenerUltimoEvento() {
+	    EntityManager em = BaseJPADao.getEntityManager();
+	    Eventos evento = null;
+
+	    try {
+	        em.getTransaction().begin();
+
+	        List<Eventos> resultados = em.createQuery(
+	            "SELECT e FROM Eventos e ORDER BY e.id DESC", Eventos.class)
+	            .setMaxResults(1)
+	            .getResultList();
+
+	        if (!resultados.isEmpty()) {
+	            evento = resultados.get(0);
+	        }
+
+	        em.getTransaction().commit();
+	    } catch (Exception e) {
+	        if (em.getTransaction().isActive()) {
+	            em.getTransaction().rollback();
+	        }
+	        e.printStackTrace(); // o usa logs
+	    } finally {
+	        em.close();
+	    }
+
+	    return evento;
+	}
+
+
 	public void guardarEventoss(Eventos evento) {
 		EntityManager em = BaseJPADao.getEntityManager();
 		em.getTransaction().begin();
@@ -38,6 +68,7 @@ public class DaoEventos {
 		dao.getEntityManager().getTransaction().commit();
 		dao.getEntityManager().close();
 	}
+	
 
 	public void eliminarEventos(int id) {
 		EntityManager em = BaseJPADao.getEntityManager();

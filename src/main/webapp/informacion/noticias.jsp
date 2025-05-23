@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!doctype html>
 <html lang="es">
@@ -22,40 +23,39 @@
     <header></header>
 
     <main class="container py-5">
-        <h2 class="text-center mb-5">📰 Lista de Noticias</h2>
 
         <c:if test="${not empty ListaNoticias}">
+            <h2 class="text-center mb-5">📰 Lista de Noticias</h2>
             <div class="row row-cols-1 row-cols-md-2 g-4">
                 <c:forEach var="noticia" items="${ListaNoticias}">
                     <div class="col">
                         <div class="card h-100 shadow-sm">
-                            <img src="${noticia.imagen}" class="card-img-top" alt="Imagen noticia" style="height: 200px; object-fit: cover;">
+                            <img src="${noticia.imagen}" class="card-img-top" alt="Imagen noticia"
+                                style="height: 200px; object-fit: cover;" />
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">${noticia.titulo}</h5>
-                                <p class="text-muted mb-1">
-                                    <i class="fa-regular fa-calendar"></i>
+                                <p class="text-muted mb-2">
+                                    <i class="fa-regular fa-calendar me-1"></i>
                                     <fmt:formatDate value="${noticia.fecha}" pattern="dd 'de' MMMM 'de' yyyy" />
-                                    |
-                                    <i class="fa-regular fa-user"></i>
-                                    ${noticia.autor}
+                                    <span class="mx-2">|</span>
+                                    <i class="fa-regular fa-user me-1"></i>${noticia.autor}
                                 </p>
                                 <p class="card-text text-truncate" style="max-height: 4.5em; overflow: hidden;">
                                     ${noticia.resumen}
                                 </p>
 
                                 <div class="mt-auto d-flex justify-content-between align-items-center">
-                                    <a href="Controller?operacion=noticiaseleccionada&id=${noticia.id}" class="btn btn-primary btn-sm px-3">Leer completa</a>
+                                    <a href="Controller?operacion=noticiaseleccionada&id=${noticia.id}"
+                                        class="btn btn-primary btn-sm px-3">Leer completa</a>
 
-                                    <c:if test="${usuario.rol == 'admin'}">
-                                        <div>
-                                            <a href="" data-id="eliminar-noticia"
-                                               class="btn btn-danger btn-sm me-2 eliminar-noticia" data-id="${noticia.id}">
-                                               Eliminar
-                                            </a>
-                                            <a href="/Administrador/ActualizarNoticia.jsp?id=${noticia.id}" 
-                                               class="btn btn-success btn-sm">Actualizar</a>
-                                        </div>
-                                    </c:if>
+                                    <div class="d-none" id="Evento-admin">
+                                        <a href="#" id="eliminar-noticia"
+                                            class="btn btn-danger btn-sm me-2 eliminar-noticia" data-id="${noticia.id}">
+                                            Eliminar
+                                        </a>
+                                        <a href="/Administrador/ActualizarNoticia.jsp?id=${noticia.id}"
+                                            class="btn btn-success btn-sm">Actualizar</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
 
             <!-- Paginación -->
             <nav aria-label="Paginación noticias" class="mt-4">
-                <ul class="pagination justify-content-center">
+                <ul class="pagination justify-content-center mb-0">
                     <c:if test="${paginaActual > 1}">
                         <li class="page-item">
                             <a class="page-link" href="Controller?operacion=listaNoticias&page=${paginaActual - 1}">Anterior</a>
@@ -73,8 +73,8 @@
                     </c:if>
 
                     <c:forEach begin="1" end="${totalPaginas}" var="i">
-                        <li class="page-item ${i == paginaActual ? 'active' : ''}">
-                            <a class="page-link" href="Controller?operacion=listaNoticias=&page=${i}">${i}</a>
+                        <li class="page-item ${i == paginaActual ? "active" : ""}">
+                            <a class="page-link" href="Controller?operacion=listaNoticias&page=${i}">${i}</a>
                         </li>
                     </c:forEach>
 
@@ -85,48 +85,63 @@
                     </c:if>
                 </ul>
             </nav>
-
         </c:if>
 
         <c:if test="${empty ListaNoticias}">
             <h3 class="text-center mt-5">No hay noticias disponibles</h3>
-            <p class="text-center">Por favor, añade alguna noticia.</p>
-            <div class="text-center">
-                <a href="InsertarNoticia.jsp" class="btn btn-primary">Añadir Noticia</a>
+            <div class="text-center d-none" id="Evento-admin">
+                <p>Por favor, añade un evento.</p>
+                <a href="/Proyecto_final_ayuntamiento_Noez/Administrador/Admin.html" class="btn btn-primary">Añadir Noticia</a>
             </div>
         </c:if>
+
     </main>
 
     <footer></footer>
-  <script src="/Proyecto_final_ayuntamiento_Noez/partescomunes/footer.js"></script>
+
+    <script src="/Proyecto_final_ayuntamiento_Noez/partescomunes/footer.js"></script>
     <script src="/Proyecto_final_ayuntamiento_Noez/partescomunes/header.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.eliminar-noticia').forEach(btn => {
-                btn.addEventListener('click', function (event) {
+                btn.addEventListener('click', function(event) {
                     event.preventDefault();
-                    const id = this.dataset.id;
+                    const id = this.dataset.id || null;
+
+                    console.log("ID a eliminar:", id);
+
+                    if (!id) {
+                        alert("❌ ID de noticia no válido.");
+                        return;
+                    }
 
                     if (!confirm("¿Estás seguro de que quieres eliminar esta noticia?")) {
                         return;
                     }
 
-                    fetch(`Controller?operacion=EliminarNoticia&id=${id}`, {
-                        method: 'GET'
-                    })
-                        .then(response => {
-                            if (response.ok) {
-                                alert("✓ Eliminado correctamente.");
-                                // Aquí podrías recargar la página o eliminar la card del DOM:
-                                location.reload();
-                            } else {
-                                alert("✗ Error al eliminar.");
-                            }
+                    fetch('Controller', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: new URLSearchParams({
+                            operacion: 'EliminarNoticia',
+                            id: id
                         })
-                        .catch(error => {
-                            console.error("Error:", error);
-                            alert("✗ Error de red.");
-                        });
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("✅ Eliminado correctamente.");
+                            location.reload();
+                        } else {
+                            alert("❌ Error al eliminar.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error de red:", error);
+                        alert("❌ Error de red.");
+                    });
                 });
             });
         });

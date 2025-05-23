@@ -70,7 +70,7 @@ const header = `
                     <ul class="navbar-nav">
 
                         <li class="nav-item">
-                            <a class="nav-link" href="/Proyecto_final_ayuntamiento_Noez/index.html">Inicio</a>
+                            <a class="nav-link" href="/Proyecto_final_ayuntamiento_Noez/Controller?operacion=inicio">Inicio</a>
                         </li>
 
                         <li class="nav-item dropdown">
@@ -130,6 +130,8 @@ const header = `
 </header>
 
 `;
+
+
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector("header").innerHTML = header;
     inicializarLogin();
@@ -139,31 +141,40 @@ function inicializarLogin() {
     const cerrarButton = document.getElementById("cerrar-sesion");
     const usuarioNombre = document.getElementById("usuario-nombre");
     const adminNavItem = document.getElementById("adminNavItem");
+    const iniciarSesionBtn = document.getElementById("iniciar-session1");
+    const eventoAdminDiv = document.getElementById("Evento-admin");
+
     const usuario = sessionStorage.getItem("usuario");
     const rol = sessionStorage.getItem("rol");
 
-    if (rol && usuario) {
+    if (usuario && rol) {
         if (usuarioNombre) {
-            usuarioNombre.textContent = "Usuario:"+usuario;
+            usuarioNombre.textContent = "Usuario: " + usuario;
             usuarioNombre.classList.remove("d-none");
         }
         if (cerrarButton) cerrarButton.classList.remove("d-none");
-        const iniciarSesionBtn = document.getElementById("iniciar-session1");
         if (iniciarSesionBtn) iniciarSesionBtn.classList.add("d-none");
-        if (rol === "admin" && adminNavItem) adminNavItem.classList.remove("d-none");
+
+        // Mostrar div Evento-admin si hay sesión iniciada (independientemente del rol)
+        if (eventoAdminDiv) eventoAdminDiv.classList.remove("d-none");
+
+        // Mostrar nav Admin solo si el rol es admin
+        if (rol === "admin" && adminNavItem) {
+            adminNavItem.classList.remove("d-none");
+        }
     } else {
         if (usuarioNombre) usuarioNombre.classList.add("d-none");
         if (cerrarButton) cerrarButton.classList.add("d-none");
-        const iniciarSesionBtn = document.getElementById("iniciar-session1");
         if (iniciarSesionBtn) iniciarSesionBtn.classList.remove("d-none");
         if (adminNavItem) adminNavItem.classList.add("d-none");
+        if (eventoAdminDiv) eventoAdminDiv.classList.add("d-none");
     }
 
-    // ✅ GESTIÓN DEL FORMULARIO DE LOGIN
+    // Gestión del formulario de login
     const loginForm = document.querySelector("#ModalIniciarSesion form");
     if (loginForm) {
         loginForm.addEventListener("submit", function (event) {
-            event.preventDefault(); // Impedir envío por defecto
+            event.preventDefault();
 
             const usuarioInput = document.getElementById("usuario");
             const contrasenaInput = document.getElementById("contrasena");
@@ -191,23 +202,23 @@ function inicializarLogin() {
                     contrasena: contrasena
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success && data.rol && data.nombre) {
-                    sessionStorage.setItem("rol", data.rol);
-                    sessionStorage.setItem("usuario", data.nombre);
-                    alert("Inicio de sesión exitoso");
-                    location.reload();
-                } else {
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.rol && data.nombre) {
+                        sessionStorage.setItem("rol", data.rol);
+                        sessionStorage.setItem("usuario", data.nombre);
+                        alert("Inicio de sesión exitoso");
+                        location.reload();
+                    } else {
+                        sessionStorage.clear();
+                        alert(data.message || "Usuario o contraseña incorrectos.");
+                    }
+                })
+                .catch(error => {
                     sessionStorage.clear();
-                    alert(data.message || "Usuario o contraseña incorrectos.");
-                }
-            })
-            .catch(error => {
-                sessionStorage.clear();
-                console.error('Error en el login:', error);
-                alert("Error en el servidor. Intenta más tarde.");
-            });
+                    console.error('Error en el login:', error);
+                    alert("Error en el servidor. Intenta más tarde.");
+                });
         });
     }
 

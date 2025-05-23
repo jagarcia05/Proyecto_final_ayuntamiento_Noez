@@ -25,6 +25,36 @@ public class NoticiasDao {
         em.close();
         return noticia;
     }
+	
+	public Noticias obtenerUltimaNoticia() {
+	    EntityManager em = BaseJPADao.getEntityManager();
+	    Noticias noticia = null;
+
+	    try {
+	        em.getTransaction().begin();
+
+	        List<Noticias> resultados = em.createQuery(
+	            "SELECT n FROM Noticias n ORDER BY n.id DESC", Noticias.class)
+	            .setMaxResults(1)
+	            .getResultList();
+
+	        if (!resultados.isEmpty()) {
+	            noticia = resultados.get(0);
+	        }
+
+	        em.getTransaction().commit();
+	    } catch (Exception e) {
+	        if (em.getTransaction().isActive()) {
+	            em.getTransaction().rollback();
+	        }
+	        e.printStackTrace(); // Puedes usar logger aquí en producción
+	    } finally {
+	        em.close();
+	    }
+
+	    return noticia;
+	}
+
 	public void guardarNoticias(Noticias Noticias) {
 		EntityManager em = BaseJPADao.getEntityManager();
         em.getTransaction().begin();
