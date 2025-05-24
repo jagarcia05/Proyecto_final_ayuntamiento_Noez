@@ -48,13 +48,12 @@
                                     <a href="Controller?operacion=noticiaseleccionada&id=${noticia.id}"
                                         class="btn btn-primary btn-sm px-3">Leer completa</a>
 
-                                    <div class="d-none" id="Evento-admin">
-                                        <a href="#" id="eliminar-noticia"
-                                            class="btn btn-danger btn-sm me-2 eliminar-noticia" data-id="${noticia.id}">
-                                            Eliminar
-                                        </a>
-                                        <a href="/Administrador/ActualizarNoticia.jsp?id=${noticia.id}"
-                                            class="btn btn-success btn-sm">Actualizar</a>
+                                    <div class="d-none Evento-admin">
+                                       <button class="eliminar-noticia btn btn-danger" data-id="${noticia.id}" data-page="${paginaActual}">Eliminar</button>
+                                       
+                                        
+                                        <a href="Controller?operacion=ActualizarNoticiaPagina&id=${noticia.id}"
+                                            class="btn btn-success ">Actualizar</a>
                                     </div>
                                 </div>
                             </div>
@@ -87,9 +86,9 @@
             </nav>
         </c:if>
 
-        <c:if test="${empty ListaNoticias}">
+        <c:if test="${totalNoticias == 0}">
             <h3 class="text-center mt-5">No hay noticias disponibles</h3>
-            <div class="text-center d-none" id="Evento-admin">
+            <div class="text-center d-none Evento-admin" >
                 <p>Por favor, añade un evento.</p>
                 <a href="/Proyecto_final_ayuntamiento_Noez/Administrador/Admin.html" class="btn btn-primary">Añadir Noticia</a>
             </div>
@@ -103,48 +102,60 @@
     <script src="/Proyecto_final_ayuntamiento_Noez/partescomunes/header.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.eliminar-noticia').forEach(btn => {
-                btn.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const id = this.dataset.id || null;
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.eliminar-noticia').forEach(btn => {
+            btn.addEventListener('click', function(event) {
+                event.preventDefault();
 
-                    console.log("ID a eliminar:", id);
+                const id = this.dataset.id;
+                const page = parseInt(this.dataset.page, 10) || 1;
+                console.log("Página para eliminar noticia:", page);
 
-                    if (!id) {
-                        alert("❌ ID de noticia no válido.");
-                        return;
-                    }
+                if (!id) {
+                    alert("❌ ID de noticia no válido.");
+                    return;
+                }
 
-                    if (!confirm("¿Estás seguro de que quieres eliminar esta noticia?")) {
-                        return;
-                    }
+                if (!confirm("¿Estás seguro de que quieres eliminar esta noticia?")) {
+                    return;
+                }
 
-                    fetch('Controller', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: new URLSearchParams({
-                            operacion: 'EliminarNoticia',
-                            id: id
-                        })
+                fetch('Controller', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        operacion: 'EliminarNoticia',
+                        id: id,
+                        page: page
                     })
-                    .then(response => {
-                        if (response.ok) {
-                            alert("✅ Eliminado correctamente.");
-                            location.reload();
-                        } else {
-                            alert("❌ Error al eliminar.");
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error de red:", error);
-                        alert("❌ Error de red.");
-                    });
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exito) {
+                    	console.log("Noticia eliminada con éxito:", data.redirigirPagina);
+                        const redirigir = data.redirigirPagina ;
+                       
+                        console.log("Redirigiendo a página:", redirigir);
+                        
+                        alert("✅ Eliminado correctamente.");
+                        window.location.assign('/Proyecto_final_ayuntamiento_Noez/Controller?operacion=listaNoticias&page=' + redirigir);
+
+                    } else {
+                        alert("❌ Error al eliminar.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error de red:", error);
+                    alert("❌ Error de red.");
                 });
             });
         });
+    });
+
+
+
     </script>
 
     <!-- Bootstrap JS -->

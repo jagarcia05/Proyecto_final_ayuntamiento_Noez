@@ -142,33 +142,38 @@ function inicializarLogin() {
     const usuarioNombre = document.getElementById("usuario-nombre");
     const adminNavItem = document.getElementById("adminNavItem");
     const iniciarSesionBtn = document.getElementById("iniciar-session1");
-    const eventoAdminDiv = document.getElementById("Evento-admin");
+    const eventoAdminDiv =  document.querySelectorAll(".Evento-admin");
 
     const usuario = sessionStorage.getItem("usuario");
     const rol = sessionStorage.getItem("rol");
 
-    if (usuario && rol) {
-        if (usuarioNombre) {
-            usuarioNombre.textContent = "Usuario: " + usuario;
-            usuarioNombre.classList.remove("d-none");
-        }
-        if (cerrarButton) cerrarButton.classList.remove("d-none");
-        if (iniciarSesionBtn) iniciarSesionBtn.classList.add("d-none");
+	const eventoAdminDivs = document.querySelectorAll(".Evento-admin"); // asegúrate que coincida con el HTML
 
-        // Mostrar div Evento-admin si hay sesión iniciada (independientemente del rol)
-        if (eventoAdminDiv) eventoAdminDiv.classList.remove("d-none");
+	if (usuario && rol) {
+	    if (usuarioNombre) {
+	        usuarioNombre.textContent = "Usuario: " + usuario;
+	        usuarioNombre.classList.remove("d-none");
+	    }
+	    if (cerrarButton) cerrarButton.classList.remove("d-none");
+	    if (iniciarSesionBtn) iniciarSesionBtn.classList.add("d-none");
 
-        // Mostrar nav Admin solo si el rol es admin
-        if (rol === "admin" && adminNavItem) {
-            adminNavItem.classList.remove("d-none");
-        }
-    } else {
-        if (usuarioNombre) usuarioNombre.classList.add("d-none");
-        if (cerrarButton) cerrarButton.classList.add("d-none");
-        if (iniciarSesionBtn) iniciarSesionBtn.classList.remove("d-none");
-        if (adminNavItem) adminNavItem.classList.add("d-none");
-        if (eventoAdminDiv) eventoAdminDiv.classList.add("d-none");
-    }
+	    // Mostrar todos los divs con clase Evento-admin
+	    eventoAdminDivs.forEach(div => div.classList.remove("d-none"));
+
+	    // Mostrar nav Admin solo si el rol es admin
+	    if (rol === "admin" && adminNavItem) {
+	        adminNavItem.classList.remove("d-none");
+	    }
+	} else {
+	    if (usuarioNombre) usuarioNombre.classList.add("d-none");
+	    if (cerrarButton) cerrarButton.classList.add("d-none");
+	    if (iniciarSesionBtn) iniciarSesionBtn.classList.remove("d-none");
+	    if (adminNavItem) adminNavItem.classList.add("d-none");
+
+	    // Ocultar todos los divs con clase Evento-admin
+	    eventoAdminDivs.forEach(div => div.classList.add("d-none"));
+	}
+
 
     // Gestión del formulario de login
     const loginForm = document.querySelector("#ModalIniciarSesion form");

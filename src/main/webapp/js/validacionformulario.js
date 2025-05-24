@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         form2.submit();
     });
 
-   document.getElementById('mensaje').classList.remove('d-none');
+
 
 
 });

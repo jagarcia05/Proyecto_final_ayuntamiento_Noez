@@ -83,77 +83,83 @@ public class Controller extends HttpServlet {
 			break;	
 		
 		case "insertarNoticia":
-		    String titulo = request.getParameter("titulo");
-		    String fechaStr = request.getParameter("fecha");
-		    LocalDate localdate = LocalDate.parse(fechaStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		    Date fecha = java.sql.Date.valueOf(localdate);
-		    String autor = request.getParameter("autor");
-		    String resumen = request.getParameter("resumen");
-		    String contenidoCompleto = request.getParameter("contenidoCompleto");
+		    try {
+		        String titulo = request.getParameter("titulo");
+		        String fechaStr = request.getParameter("fecha");
+		        LocalDate localdate = LocalDate.parse(fechaStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		        Date fecha = java.sql.Date.valueOf(localdate);
+		        String autor = request.getParameter("autor");
+		        String resumen = request.getParameter("resumen");
+		        String contenidoCompleto = request.getParameter("contenidoCompleto");
 
-		    Part filePart = request.getPart("imagen");
-		    InputStream inputStream1 = filePart.getInputStream();
-		    byte[] bytes1 = inputStream1.readAllBytes();
-		    String base64Image1 = Base64.getEncoder().encodeToString(bytes1);
+		        Part filePart = request.getPart("imagen");
+		        InputStream inputStream1 = filePart.getInputStream();
+		        byte[] bytes1 = inputStream1.readAllBytes();
+		        String base64Image1 = Base64.getEncoder().encodeToString(bytes1);
 
-		    // Subir a ImgBB
-		    
-		    String imageUrl1 = subirAImgBB(apiKey, base64Image1);
+		        // Subir a ImgBB
+		        String imageUrl1 = subirAImgBB(apiKey, base64Image1);
 
-		    Noticias noticia = new Noticias();
-		    noticia.setTitulo(titulo);
-		    noticia.setFecha(fecha);
-		    noticia.setAutor(autor);
-		    noticia.setResumen(resumen);
-		    noticia.setContenidoCompleto(contenidoCompleto);
-		    noticia.setImagen(imageUrl1); // URL de ImgBB);
+		        Noticias noticia = new Noticias();
+		        noticia.setTitulo(titulo);
+		        noticia.setFecha(fecha);
+		        noticia.setAutor(autor);
+		        noticia.setResumen(resumen);
+		        noticia.setContenidoCompleto(contenidoCompleto);
+		        noticia.setImagen(imageUrl1);
 
-		     daoNoticia = new NoticiasDao();
-		    daoNoticia.guardarNoticias(noticia);    
+		        daoNoticia = new NoticiasDao();
+		        daoNoticia.guardarNoticias(noticia);
 
-		    request.getRequestDispatcher("Administrador/Admin.html").forward(request, response);
-		    break;
-		case "insertarEvento":
-		    String tituloEvento = request.getParameter("tituloEvento");
-		    String fechaStr1 = request.getParameter("fechaEvento");
-		    LocalDate localdate1 = LocalDate.parse(fechaStr1, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		    Date fechaEvento = java.sql.Date.valueOf(localdate1);
-		    String Lugar = request.getParameter("lugarEvento");
-		    String resumenEvento = request.getParameter("resumenEvento");
-		    String DescripcionCompleta = request.getParameter("descripcionCompletaEvento");
-
-		    // Leer la imagen del formulario
-		    Part filePart1 = request.getPart("imagenEvento");
-		    InputStream inputStream = filePart1.getInputStream();
-		    byte[] bytes = inputStream.readAllBytes();
-		    String base64Image = Base64.getEncoder().encodeToString(bytes);
-
-		    // Subir a ImgBB
+		        responderJson(response, true);
+		        return;
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        responderJson(response, false);
+		        return;
+		    }
 		   
-		    String imageUrl = subirAImgBB(apiKey, base64Image);
 
-		    // Guardar en la base de datos
-		     evento = new Eventos();
-		    evento.setTitulo(tituloEvento);
-		    evento.setFecha(fechaEvento);
-		    evento.setLugar(Lugar);
-		    evento.setResumen(resumenEvento);
-		    evento.setDescripcionCompleta(DescripcionCompleta);
-		    evento.setImagen(imageUrl); // URL de ImgBB
+		case "insertarEvento":
+		    try {
+		        String tituloEvento = request.getParameter("tituloEvento");
+		        String fechaStr1 = request.getParameter("fechaEvento");
+		        LocalDate localdate1 = LocalDate.parse(fechaStr1, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		        Date fechaEvento = java.sql.Date.valueOf(localdate1);
+		        String lugar = request.getParameter("lugarEvento");
+		        String resumenEvento = request.getParameter("resumenEvento");
+		        String descripcionCompleta = request.getParameter("descripcionCompletaEvento");
 
-		    DaoEventos daoEvento = new DaoEventos();
-		    daoEvento.guardarEventoss(evento);
+		        Part filePart1 = request.getPart("imagenEvento");
+		        InputStream inputStream = filePart1.getInputStream();
+		        byte[] bytes = inputStream.readAllBytes();
+		        String base64Image = Base64.getEncoder().encodeToString(bytes);
 
-		    request.getRequestDispatcher("Administrador/Admin.html").forward(request, response);
-		    break;
+		        // Subir a ImgBB
+		        String imageUrl = subirAImgBB(apiKey, base64Image);
 
-		
+		        // Guardar en la base de datos
+		        evento = new Eventos();
+		        evento.setTitulo(tituloEvento);
+		        evento.setFecha(fechaEvento);
+		        evento.setLugar(lugar);
+		        evento.setResumen(resumenEvento);
+		        evento.setDescripcionCompleta(descripcionCompleta);
+		        evento.setImagen(imageUrl);
 
+		        DaoEventos daoEvento = new DaoEventos();
+		        daoEvento.guardarEventoss(evento);
 
-
+		        responderJson(response, true);
+		        return;
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        responderJson(response, false);
+		        return;
+		    }
 		case "listarEventos":
-		     daoEventos = new DaoEventos();
-		    
+		    daoEventos = new DaoEventos();
+
 		    pageParam = request.getParameter("page");
 		    if (pageParam != null) {
 		        try {
@@ -162,28 +168,41 @@ public class Controller extends HttpServlet {
 		        } catch (NumberFormatException e) {
 		            page = 1;
 		        }
+		    } else {
+		        page = 1;
 		    }
 
 		    List<Eventos> todosEventos = daoEventos.obtenerTodosLosEventoss();
 		    int totalRecords = todosEventos.size();
 		    int totalPages = (int) Math.ceil(totalRecords * 1.0 / recordsPerPage);
 
+		    // Si la página pedida es mayor que la última disponible, redirigir a la última válida
+		    if (page > totalPages) {
+		        page = Math.max(totalPages, 1); // mínimo 1
+		    }
+
 		    // Calcular índices de paginación
 		    int startIndex = (page - 1) * recordsPerPage;
 		    int endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
+		    if (startIndex > endIndex) {
+		    	startIndex = 0;
+		    	endIndex = Math.min(recordsPerPage, totalRecords);
+		        page = 1;
+		    }
 
+
+		    // Evitar subList fuera de rango
 		    List<Eventos> eventosPagina = todosEventos.subList(startIndex, endIndex);
-
+		      
 		    request.setAttribute("ListaEvento", eventosPagina);
 		    request.setAttribute("paginaActual", page);
 		    request.setAttribute("totalPaginas", totalPages);
 
 		    request.getRequestDispatcher("informacion/Eventos.jsp").forward(request, response);
 		    break;
-		
+
 		case "listaNoticias":
 		    NoticiasDao daoNoticias = new NoticiasDao();
-
 
 		    pageParam = request.getParameter("page");
 		    if (pageParam != null) {
@@ -201,12 +220,21 @@ public class Controller extends HttpServlet {
 		    int totalRecords1 = todasNoticias.size();
 		    int totalPages1 = (int) Math.ceil((double) totalRecords1 / recordsPerPage);
 
+		    // Si totalPages1 es 0 (no hay noticias), establecemos mínimo 1 para evitar errores
+		    if (totalPages1 < 1) totalPages1 = 1;
+
+		    // Validar que la página solicitada no supere el total de páginas
+		    if (page > totalPages1) {
+		        page = totalPages1;
+		    }
+
 		    int startIndex1 = (page - 1) * recordsPerPage;
 		    int endIndex1 = Math.min(startIndex1 + recordsPerPage, totalRecords1);
 
 		    // Validar índices para evitar errores
 		    if (startIndex1 > endIndex1) {
-		        startIndex = 0;
+		        startIndex1 = 0;
+		        endIndex1 = Math.min(recordsPerPage, totalRecords1);
 		        page = 1;
 		    }
 
@@ -218,6 +246,7 @@ public class Controller extends HttpServlet {
 
 		    request.getRequestDispatcher("informacion/noticias.jsp").forward(request, response);
 		    break;
+
 		case "EventoSeleccionado":
 			int idEvento = Integer.parseInt(request.getParameter("id"));
 			DaoEventos daoEventos1 = new DaoEventos();
@@ -256,28 +285,197 @@ public class Controller extends HttpServlet {
 		    }
 		    out.flush();
 		    break;
-		 case "EliminarNoticia":
-			 // Obtener el ID de la noticia a eliminar desde la solicitud
-				int idNoticiaEliminar = Integer.parseInt(request.getParameter("id"));
-				System.out.println("el id es"+idNoticiaEliminar);
-				NoticiasDao daNoticia = new NoticiasDao();
-				daNoticia.eliminarNoticias(idNoticiaEliminar);
+		case "EliminarNoticia":
+		    try {
+		        int idNoticiaEliminar = Integer.parseInt(request.getParameter("id"));
+		        int paginaActual = Integer.parseInt(request.getParameter("page"));
+
+		        NoticiasDao daNoticia = new NoticiasDao();
+		        daNoticia.eliminarNoticias(idNoticiaEliminar);
+
+		        int totalNoticias = daNoticia.contartotalNoticias();
+		        int noticiasPorPagina = 5;
+		        int totalPaginas = (int) Math.ceil((double) totalNoticias / noticiasPorPagina);
+
+		        // Validar que totalPaginas nunca sea 0 para evitar errores
+		        if (totalPaginas < 1) totalPaginas = 1;
+
+		        // Si la página actual es mayor que el total de páginas tras eliminar, bajamos una página
+		        int paginaRedirigir = paginaActual > totalPaginas ? totalPaginas : paginaActual;
+		        if (paginaRedirigir < 1) paginaRedirigir = 1;
+
+		        System.out.println("[EliminarNoticia] Página actual: " + paginaActual);
+		        System.out.println("[EliminarNoticia] Total noticias: " + totalNoticias);
+		        System.out.println("[EliminarNoticia] Total páginas: " + totalPaginas);
+		        System.out.println("[EliminarNoticia] Página a redirigir: " + paginaRedirigir);
+
+		        String json = "{\"exito\": true, \"redirigirPagina\": " + paginaRedirigir + "}";
+		        response.setContentType("application/json");
+		        response.setCharacterEncoding("UTF-8");
+		        response.getWriter().write(json);
+
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        response.setContentType("application/json");
+		        response.setCharacterEncoding("UTF-8");
+		        response.getWriter().write("{\"exito\": false}");
+		    }
+		    break;
+
+		case "EliminarEvento":
+		    try {
+		        int idEventoEliminar = Integer.parseInt(request.getParameter("id"));
+		        int paginaActual = Integer.parseInt(request.getParameter("page"));
+
+		        daoEventos = new DaoEventos();
+		        daoEventos.eliminarEventos(idEventoEliminar);
+
+		        int totalEventos = daoEventos.contarTotalEventos();
+		        int eventosPorPagina = 5; // O usa la variable global recordsPerPage si tienes
+		        int totalPaginas = (int) Math.ceil((double) totalEventos / eventosPorPagina);
+
+		        // Evitar que totalPaginas sea 0 para evitar errores
+		        if (totalPaginas < 1) totalPaginas = 1;
+
+		        // Ajustar la página a redirigir para que no sea mayor que el total de páginas
+		        int paginaRedirigir = paginaActual > totalPaginas ? totalPaginas : paginaActual;
+		        if (paginaRedirigir < 1) paginaRedirigir = 1;
+
+		        // Logs para depurar
+		        System.out.println("[EliminarEvento] Página actual: " + paginaActual);
+		        System.out.println("[EliminarEvento] Total eventos: " + totalEventos);
+		        System.out.println("[EliminarEvento] Total páginas: " + totalPaginas);
+		        System.out.println("[EliminarEvento] Página a redirigir: " + paginaRedirigir);
+
+		        String json = "{\"exito\": true, \"redirigirPagina\": " + paginaRedirigir + "}";
+		        response.setContentType("application/json");
+		        response.setCharacterEncoding("UTF-8");
+		        response.getWriter().write(json);
+
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        response.setContentType("application/json");
+		        response.setCharacterEncoding("UTF-8");
+		        response.getWriter().write("{\"exito\": false}");
+		    }
+		    break;
+
+		case "ActualizarEventoPagina":
+			int idEventoActualizar = Integer.parseInt(request.getParameter("id"));
+			Eventos eventoActualizar = daoEventos.obtenerEventosPorId(idEventoActualizar);
+			request.setAttribute("eventoActualizar", eventoActualizar);
+			request.getRequestDispatcher("Administrador/ActualizarEvento.jsp").forward(request, response);
+			break;
+		case "ActualizarNoticiaPagina":
+			int idNoticiaActualizar = Integer.parseInt(request.getParameter("id"));
+			Noticias noticiaActualizar = daoNoticia.obtenerNoticiasPorId(idNoticiaActualizar);
+			request.setAttribute("noticiaActualizar", noticiaActualizar);
+			request.getRequestDispatcher("Administrador/ActualizarNoticia.jsp").forward(request, response);
+			break;
+		case "actualizarEvento":
+			
+				int idEvento1 = Integer.parseInt(request.getParameter("id"));
+				String tituloEvento = request.getParameter("titulo");
+				String fechaStr2 = request.getParameter("fecha");
+				LocalDate localdate2 = LocalDate.parse(fechaStr2, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				Date fechaEvento = java.sql.Date.valueOf(localdate2);
+				String lugarEvento = request.getParameter("lugar");
+				String resumenEvento = request.getParameter("resumenEvento");
+				String descripcionCompletaEvento = request.getParameter("descripcionCompleta");
+				Part filePart13 = request.getPart("imagen");
+				if (filePart13.getSize() == 0|| filePart13.equals("null")) {
+					// Si no se subió una nueva imagen, obtenemos la imagen actual del evento
+					Eventos eventoActual = daoEventos.obtenerEventosPorId(idEvento1);
+					if (eventoActual != null) {
+						evento.setImagen(eventoActual.getImagen());
+					} else {
+						request.setAttribute("mensaje", "Evento no encontrado.");
+						request.getRequestDispatcher("Administrador/ActualizarEvento.jsp").forward(request, response);
+						return;
+					}
+				}else {
+					InputStream inputStream = filePart13.getInputStream();
+			        byte[] bytes = inputStream.readAllBytes();
+			        String base64Image = Base64.getEncoder().encodeToString(bytes);
+
+			        // Subir a ImgBB
+			        String imageUrl3 = subirAImgBB(apiKey, base64Image);
+			        evento.setImagen(imageUrl3);
+				}
+		        
+
 				
-				break;
-		 case "EliminarEvento":
-			    int idEventoEliminar1 = Integer.parseInt(request.getParameter("id"));
-			    DaoEventos daEventos = new DaoEventos();
-			    daEventos.eliminarEventos(idEventoEliminar1);
-			    break;
+
+				evento.setId(idEvento1);
+				evento.setTitulo(tituloEvento);
+				evento.setFecha(fechaEvento);
+				evento.setLugar(lugarEvento);
+				evento.setResumen(resumenEvento);
+				evento.setDescripcionCompleta(descripcionCompletaEvento);
+				
+
+				daoEventos.actualizarEventos(evento);
+				request.setAttribute("mensaje", "Evento actualizado correctamente.");
+				request.getRequestDispatcher("Administrador/ActualizarEvento.jsp").forward(request, response);
+			break;
+		case "actualizarNoticia":
+			Noticias noticiaActualizar1 = new Noticias();
+				int idNoticia1 = Integer.parseInt(request.getParameter("id"));
+				String tituloNoticia = request.getParameter("titulo");
+				String fechaStr3 = request.getParameter("fecha");
+				LocalDate localdate3 = LocalDate.parse(fechaStr3, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				Date fechaNoticia = java.sql.Date.valueOf(localdate3);
+				String autorNoticia = request.getParameter("autor");
+				String resumenNoticia = request.getParameter("resumen");
+				String contenidoCompletoNoticia = request.getParameter("contenidoCompleto");
+				Part filePart2 = request.getPart("imagen");
+				if (filePart2.equals("null") || filePart2.getSize() == 0) {
+					
+					Noticias noticiaActual = daoNoticia.obtenerNoticiasPorId(idNoticia1);
+					if (noticiaActual != null) {
+						noticiaActualizar1.setImagen(noticiaActual.getImagen());
+					} else {
+						request.setAttribute("mensaje", "Noticia no encontrada.");
+						request.getRequestDispatcher("Administrador/ActualizarNoticia.jsp").forward(request, response);
+						return;
+					}
+				}else {
+					InputStream inputStream1 = filePart2.getInputStream();
+					byte[] bytes1 = inputStream1.readAllBytes();
+					String base64Image1 = Base64.getEncoder().encodeToString(bytes1);
+
+					// Subir a ImgBB
+					String imageUrl1 = subirAImgBB(apiKey, base64Image1);
+					noticiaActualizar1.setImagen(imageUrl1);
+				}
+				
+
+				
+				noticiaActualizar1.setId(idNoticia1);
+				noticiaActualizar1.setTitulo(tituloNoticia);
+				noticiaActualizar1.setFecha(fechaNoticia);
+				noticiaActualizar1.setAutor(autorNoticia);
+				noticiaActualizar1.setResumen(resumenNoticia);
+				noticiaActualizar1.setContenidoCompleto(contenidoCompletoNoticia);
+				
+
+				daoNoticia.actualizarNoticias(noticiaActualizar1);
+				request.setAttribute("mensaje", "Noticia actualizada correctamente.");
+
+				request.getRequestDispatcher("Administrador/ActualizarNoticia.jsp").forward(request, response);
+			break;
+			
+
 
 
 
 
 
 		    
-		}
+		
 
 		
+	}
 	}
 
 	/**
@@ -334,6 +532,17 @@ public class Controller extends HttpServlet {
 	        return null;
 	    }
 	}
+	private void responderJson(HttpServletResponse response, boolean exito) throws IOException {
+	    response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+	    response.setStatus(HttpServletResponse.SC_OK);  // Código 200 OK
+	    String json = "{\"exito\": " + exito + "}";
+	    response.getWriter().write(json);
+	    response.getWriter().flush();
+	    // No cerrar el writer manualmente
+	}
+
+
 
 
 

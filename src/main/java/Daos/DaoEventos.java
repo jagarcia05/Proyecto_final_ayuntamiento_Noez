@@ -51,6 +51,15 @@ public class DaoEventos {
 	    return evento;
 	}
 
+	public int contarTotalEventos() {
+		EntityManager em = BaseJPADao.getEntityManager();
+		em.getTransaction().begin();
+		Long count = em.createQuery("SELECT COUNT(e) FROM Eventos e", Long.class).getSingleResult();
+		em.getTransaction().commit();
+		em.close();
+		return count.intValue();
+	}
+
 
 	public void guardarEventoss(Eventos evento) {
 		EntityManager em = BaseJPADao.getEntityManager();
@@ -62,11 +71,14 @@ public class DaoEventos {
 	}
 
 	public void actualizarEventos(Eventos evento) {
-		BaseJPADao dao = new BaseJPADao();
-		dao.getEntityManager().getTransaction().begin();
-		dao.getEntityManager().merge(evento);
-		dao.getEntityManager().getTransaction().commit();
-		dao.getEntityManager().close();
+		EntityManager em = BaseJPADao.getEntityManager();
+		em.getTransaction().begin();
+		em.merge(evento);
+		em.getTransaction().commit();
+		em.close();
+		
+		
+		
 	}
 	
 

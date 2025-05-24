@@ -35,18 +35,13 @@
         </div>
     </div>
 
-    <div class="mensaje" id="mensaje" class="d-none">
-        <div class="alert alert-success" id="mensaje-exito" style="display:none;">
-            <strong>¡Éxito!</strong> La noticia se ha insertado correctamente.
-        </div>
-        <div class="alert alert-danger" id="mensaje-error" style="display:none;">
-            <strong>Error:</strong> Ha ocurrido un error al insertar la noticia.
-        </div>
-    </div>
+  
+
 
 	    <main class="container py-5">
 	        <h2 class="text-center">📝 Insertar Noticia</h2>
-      <form id="form-noticia" action="/Proyecto_final_ayuntamiento_Noez/Controller" method="Post" enctype="multipart/form-data">
+      <form id="form-noticia" enctype="multipart/form-data">
+      
       
             <input type="hidden" name="operacion" value="insertarNoticia">
 
@@ -85,7 +80,8 @@
         </form>
 	
 		        <h2 class="pt-5 text-center">📆 Insertar Evento</h2>
-		        <form id="form-evento" action="/Proyecto_final_ayuntamiento_Noez/Controller" method="post" enctype="multipart/form-data">
+		       <form id="form-evento" enctype="multipart/form-data">
+		       
 		      
 		            <input type="hidden" name="operacion" value="insertarEvento">
 		
@@ -129,7 +125,7 @@
     <script src="/Proyecto_final_ayuntamiento_Noez/partescomunes/header.js"></script>
   
     <script src="/Proyecto_final_ayuntamiento_Noez/js/validacionformulario.js"></script>
-
+<script src="/Proyecto_final_ayuntamiento_Noez/js/api.js"></script>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

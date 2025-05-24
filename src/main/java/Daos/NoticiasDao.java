@@ -55,6 +55,15 @@ public class NoticiasDao {
 	    return noticia;
 	}
 
+	public int contartotalNoticias() {
+		EntityManager em = BaseJPADao.getEntityManager();
+		em.getTransaction().begin();
+		Long count = em.createQuery("SELECT COUNT(n) FROM Noticias n", Long.class).getSingleResult();
+		em.getTransaction().commit();
+		em.close();
+		return count.intValue();
+	}	
+
 	public void guardarNoticias(Noticias Noticias) {
 		EntityManager em = BaseJPADao.getEntityManager();
         em.getTransaction().begin();

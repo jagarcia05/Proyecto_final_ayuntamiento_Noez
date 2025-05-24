@@ -37,9 +37,11 @@
                                 <div class="mt-auto d-flex justify-content-between">
                                     <a href="Controller?operacion=EventoSeleccionado&id=${evento.id}" class="btn btn-primary btn-sm">Leer completa</a>
 
-                                    <div class="d-none evento-container" id="Evento-admin">
-                                        <a href="#" class="eliminar-evento btn btn-danger btn-sm me-2" data-id="${evento.id}">Eliminar</a>
-                                        <a href="Controller?operacion=ActualizarEvento&id=${evento.id}" class="btn btn-success btn-sm">Actualizar</a>
+                                    <div class="d-none Evento-admin" >
+                                        <button class="btn btn-danger eliminar-evento" data-id="${evento.id}" data-page="${paginaActual}">
+										    Eliminar
+										</button>
+                                        <a href="Controller?operacion=ActualizarEventoPagina&id=${evento.id}" class="btn btn-success ">Actualizar</a>
                                     </div>
                                 </div>
                             </div>
@@ -72,9 +74,9 @@
             </nav>
         </c:if>
 
-        <c:if test="${empty ListaEvento}">
+        <c:if test="${totalEventos == 0}">
             <h2 class="pt-5 text-center">No hay eventos disponibles</h2>
-            <div class="text-center d-none" id="Evento-admin">
+            <div class="text-center d-none Evento-admin">
                 <p>Por favor, añade un evento.</p>
                 <a href="/Proyecto_final_ayuntamiento_Noez/Administrador/Admin.html" class="btn btn-primary">Añadir Noticia</a>
             </div>
@@ -87,43 +89,53 @@
     <script src="/Proyecto_final_ayuntamiento_Noez/partescomunes/header.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.eliminar-evento').forEach(btn => {
-                btn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const id = this.dataset.id;
-                    if (!id) {
-                        alert("❌ ID de evento no válido.");
-                        return;
-                    }
-                    if (!confirm("¿Estás seguro de que quieres eliminar este evento?")) {
-                        return;
-                    }
-                    fetch('Controller', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: new URLSearchParams({
-                            operacion: 'EliminarEvento',
-                            id: id
-                        })
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.eliminar-evento').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const id = this.dataset.id;
+                const page = parseInt(this.dataset.page, 10) || 1;  // Aseguramos que page sea número, y si no, 1
+
+                if (!id) {
+                    alert("❌ ID de evento no válido.");
+                    return;
+                }
+
+                if (!confirm("¿Estás seguro de que quieres eliminar este evento?")) {
+                    return;
+                }
+
+                fetch('Controller', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        operacion: 'EliminarEvento',
+                        id: id,
+                        page: page
                     })
-                    .then(response => {
-                        if (response.ok) {
-                            alert("✅ Eliminado correctamente.");
-                            location.reload();
-                        } else {
-                            alert("❌ Error al eliminar.");
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error:", error);
-                        alert("❌ Error de red.");
-                    });
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exito) {
+                        const redirigir = data.redirigirPagina ;
+                        alert("✅ Eliminado correctamente.");
+                        window.location.assign('Controller?operacion=listarEventos&page=' + redirigir);
+                        
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("❌ Error de red.");
                 });
             });
         });
+    });
+
+
+
     </script>
 
     <!-- Bootstrap JS bundle -->
