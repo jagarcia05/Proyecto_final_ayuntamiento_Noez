@@ -19,14 +19,28 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Validar extensión de imagen
-        const nombreArchivo = ImagenInput.files[0].name.toLowerCase();
-        const extensionValida = /\.(jpg|jpeg|png)$/i;
+         const archivo = ImagenInput.files[0];
 
-        if (!extensionValida.test(nombreArchivo)) {
-            alert("La imagen debe tener formato .jpg, .jpeg o .png.");
-            return;
-        }
+    	if (!archivo) return;
+
+   	 const nombreArchivo = archivo.name.toLowerCase();
+    	const extensionValida = /\.(jpg|jpeg|png)$/i;
+    	const tamañoMaximo = 5 * 1024 * 1024; // 5 MB en bytes
+
+    	if (!extensionValida.test(nombreArchivo)) {
+        alert("La imagen debe tener formato .jpg, .jpeg o .png.");
+        imagenInput.value = ""; // Limpia el campo
+        return;
+    	}
+
+    	if (archivo.size > tamañoMaximo) {
+        alert("La imagen no debe superar los 5 MB.");
+        imagenInput.value = ""; // Limpia el campo
+        return;
+    	}
+
+    // Si pasa todas las validaciones, puedes continuar
+    console.log("Imagen válida:", nombreArchivo);
 
         // Validaciones de longitud
         if (Resumen.length < 20 || Resumen.length > 500) {
