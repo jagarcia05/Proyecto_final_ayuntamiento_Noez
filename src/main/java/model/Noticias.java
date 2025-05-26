@@ -22,6 +22,8 @@ public class Noticias implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
 	@Lob
