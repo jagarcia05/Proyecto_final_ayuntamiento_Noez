@@ -32,6 +32,8 @@ import java.util.Base64;
 import Daos.DaoEventos;
 import Daos.DaoUsuario;
 import Daos.NoticiasDao;
+import Util.Hash;
+
 import jakarta.servlet.annotation.MultipartConfig;
 
 /**
@@ -266,25 +268,39 @@ public class Controller extends HttpServlet {
 		    String password = request.getParameter("contrasena");
 
 		    DaoUsuario daoUsuario = new DaoUsuario();
-		    Usuario usuarioEncontrado = daoUsuario.obtenerUsuarioPorNombre(usuarioNombre);
+		    Usuario usuario = daoUsuario.obtenerUsuarioPorNombre(usuarioNombre);
 
 		    response.setContentType("application/json");
 		    PrintWriter out = response.getWriter();
+		    
+		    try {
+		        if (usuario != null && usuario.getPassword().equals(Hash.getSha256(password))) {
+		            request.getSession().setAttribute("usuario", usuario);
+		            
+		            out.print("{");
+		            out.print("\"success\": true,");
+		            out.print("\"rol\": \"" + "admin" + "\",");
+		            out.print("\"nombre\": \"" + usuario.getNombre() + "\"");
+		            out.print("}");
+		        } else {
+		            request.getSession().removeAttribute("usuario");
 
-		    if (usuarioEncontrado != null && usuarioEncontrado.getPassword().equals(password)) {
-		        out.print("{");
-		        out.print("\"success\": true,");
-		        out.print("\"rol\": \"" + "admin" + "\",");
-		        out.print("\"nombre\": \"" + usuarioEncontrado.getNombre() + "\"");
-		        out.print("}");
-		    } else {
+		            out.print("{");
+		            out.print("\"success\": false,");
+		            out.print("\"message\": \"Usuario o contraseña incorrectos.\"");
+		            out.print("}");
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
 		        out.print("{");
 		        out.print("\"success\": false,");
-		        out.print("\"message\": \"Usuario o contraseña incorrectos.\"");
+		        out.print("\"message\": \"Error interno del servidor.\"");
 		        out.print("}");
 		    }
+
 		    out.flush();
 		    break;
+
 		case "EliminarNoticia":
 		    try {
 		        int idNoticiaEliminar = Integer.parseInt(request.getParameter("id"));

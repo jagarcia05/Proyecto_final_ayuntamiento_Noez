@@ -20,10 +20,9 @@ public class Eventos implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Lob
 	private String imagen;
 
 	private String lugar;

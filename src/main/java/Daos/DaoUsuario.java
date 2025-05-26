@@ -1,14 +1,26 @@
 package Daos; 
+import java.util.List;
+
+import jakarta.persistence.EntityManager;
 import model.Usuario;
 
 public class DaoUsuario {
 	public Usuario obtenerUsuarioPorNombre(String nombre) {
-		BaseJPADao dao = new BaseJPADao();
-		Usuario usuario = dao.getEntityManager()
-				.createQuery("SELECT u FROM Usuario u WHERE u.nombre = :nombre", Usuario.class)
-				.setParameter("nombre", nombre).getSingleResult();
-		dao.getEntityManager().close();
-		return usuario;
+	    EntityManager em = BaseJPADao.getEntityManager();
+	    List<Usuario> lista = em.createQuery(
+	            "SELECT u FROM Usuario u WHERE u.nombre = :nombre", Usuario.class)
+	            .setParameter("nombre", nombre)
+	            .getResultList();
+	    em.close();
+
+	    if (!lista.isEmpty()) {
+	        return lista.get(0);
+	    } else {
+	        return null;
+	    }
 	}
+
+
+
 
 }
