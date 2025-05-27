@@ -22,7 +22,16 @@
     <main class="container py-5">
         <c:if test="${not empty ListaEvento}">
             <h2 class="pt-5 text-center mb-4">📝 Lista de Eventos</h2>
-
+<form method="get" action="Controller" class="mb-4 text-center">
+        <input type="hidden" name="operacion" value="listarEventos"/>
+        <input type="hidden" name="page" value="${paginaActual}"/>
+        <label for="orden">Ordenar por:</label>
+        <select name="orden" id="orden" onchange="this.form.submit()" class="form-select d-inline w-auto ms-2">
+            <option value="fecha" ${orden == 'fecha' ? 'selected' : ''}>Fecha</option>
+            <option value="titulo" ${orden == 'titulo' ? 'selected' : ''}>Título</option>
+            <option value="lugar" ${orden == 'lugar' ? 'selected' : ''}>Lugar</option>
+        </select>
+    </form>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
                 <c:forEach var="evento" items="${ListaEvento}">
                     <div class="col">
