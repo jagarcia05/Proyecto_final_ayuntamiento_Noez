@@ -64,19 +64,19 @@
                 <ul class="pagination justify-content-center">
                     <c:if test="${paginaActual > 1}">
                         <li class="page-item">
-                            <a class="page-link" href="Controller?operacion=listarEventos&page=${paginaActual - 1}">Anterior</a>
+                            <a class="page-link" href="Controller?operacion=listarEventos&page=${paginaActual - 1}&orden=${orden}">Anterior</a>
                         </li>
                     </c:if>
 
                     <c:forEach begin="1" end="${totalPaginas}" var="i">
                         <li class="page-item ${i == paginaActual ? 'active' : ''}">
-                            <a class="page-link" href="Controller?operacion=listarEventos&page=${i}">${i}</a>
+                            <a class="page-link" href="Controller?operacion=listarEventos&page=${i}&orden=${orden}">${i}</a>
                         </li>
                     </c:forEach>
 
                     <c:if test="${paginaActual < totalPaginas}">
                         <li class="page-item">
-                            <a class="page-link" href="Controller?operacion=listarEventos&page=${paginaActual + 1}">Siguiente</a>
+                            <a class="page-link" href="Controller?operacion=listarEventos&page=${paginaActual + 1}&orden=${orden}">Siguiente</a>
                         </li>
                     </c:if>
                 </ul>
