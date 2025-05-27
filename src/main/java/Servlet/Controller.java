@@ -161,6 +161,10 @@ public class Controller extends HttpServlet {
 		    }
 		case "listarEventos":
 		    daoEventos = new DaoEventos();
+			String orden = request.getParameter("orden");
+			if (orden == null) {
+			    orden = "fecha"; // valor por defecto
+			}
 
 		    pageParam = request.getParameter("page");
 		    if (pageParam != null) {
@@ -175,6 +179,19 @@ public class Controller extends HttpServlet {
 		    }
 
 		    List<Eventos> todosEventos = daoEventos.obtenerTodosLosEventoss();
+			switch (orden) {
+			    case "titulo":
+			        todosEventos.sort(Comparator.comparing(Eventos::getTitulo, String.CASE_INSENSITIVE_ORDER));
+			        break;
+			    case "lugar":
+			        todosEventos.sort(Comparator.comparing(Eventos::getLugar, String.CASE_INSENSITIVE_ORDER));
+			        break;
+			    case "fecha":
+			    default:
+			        todosEventos.sort(Comparator.comparing(Eventos::getFecha));
+			        break;
+			}
+		
 		    int totalRecords = todosEventos.size();
 		    int totalPages = (int) Math.ceil(totalRecords * 1.0 / recordsPerPage);
 
@@ -199,7 +216,7 @@ public class Controller extends HttpServlet {
 		    request.setAttribute("ListaEvento", eventosPagina);
 		    request.setAttribute("paginaActual", page);
 		    request.setAttribute("totalPaginas", totalPages);
-
+			request.setAttribute("orden", orden);	
 		    request.getRequestDispatcher("informacion/Eventos.jsp").forward(request, response);
 		    break;
 
