@@ -26,6 +26,16 @@
 
         <c:if test="${not empty ListaNoticias}">
             <h2 class="text-center mb-5">📰 Lista de Noticias</h2>
+            <form method="get" action="Controller" class="mb-4 text-center">
+        <input type="hidden" name="operacion" value="listaNoticias"/>
+        <input type="hidden" name="page" value="${paginaActual}"/>
+        <label for="orden">Ordenar por:</label>
+        <select name="orden" id="orden" onchange="this.form.submit()" class="form-select d-inline w-auto ms-2">
+            <option value="fecha" ${orden == 'fecha' ? 'selected' : ''}>Fecha</option>
+            <option value="titulo" ${orden == 'titulo' ? 'selected' : ''}>Título</option>
+            <option value="autor" ${orden == 'autor' ? 'selected' : ''}>autor</option>
+        </select>
+    </form>
             <div class="row row-cols-1 row-cols-md-2 g-4">
                 <c:forEach var="noticia" items="${ListaNoticias}">
                     <div class="col">
@@ -160,6 +170,11 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+     <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 
 </html>

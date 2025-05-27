@@ -12,7 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const ImagenInput = document.getElementById('imagen-noticia');
         const Resumen = document.getElementById('resumen-noticia').value.trim();
         const Contenido = document.getElementById('contenido-noticia').value.trim();
-
+		const fechaSeleccionada = new Date(Fecha);
+		const hoy = new Date();
+		hoy.setHours(0, 0, 0, 0);
         // Validar campos vacíos
         if (!Titulo || !Fecha || !Autor || ImagenInput.files.length === 0 || !Resumen || !Contenido) {
             alert("Por favor, completa todos los campos.");
@@ -62,6 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("El autor no puede exceder los 50 caracteres.");
             return;
         }
+		if (fechaSeleccionada > hoy) {
+		   alert("❌ La fecha de una noticia no puede ser futura.");
+		   return false; // Evita que se envíe el formulario
+		 }
 
         // Mostrar spinner y enviar
         document.getElementById('loadingSpinner').classList.remove('d-none');
@@ -77,7 +83,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const ImagenInput = document.getElementById('imagen-evento');
         const Resumen = document.getElementById('resumen-evento').value.trim();
         const Contenido = document.getElementById('contenido-evento').value.trim();
-
+		const fechaSeleccionada = new Date(Fecha);
+				const hoy = new Date();
+				hoy.setHours(0, 0, 0, 0);
         // Validar campos vacíos
 		 if (!Titulo || !Fecha || !lugar || ImagenInput.files.length === 0 || !Resumen || !Contenido) {
 			 alert("Por favor, completa todos los campos.");
@@ -107,6 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("El título no puede exceder los 100 caracteres.");
             return;
         }
+		if(fechaSeleccionada < hoy) {
+			                       alert("❌ La fecha de un evento no puede ser pasada.");
+				                          return ; // Evita que se envíe el formulario
+									  }	
 
         
 

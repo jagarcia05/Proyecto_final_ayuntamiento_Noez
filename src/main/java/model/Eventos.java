@@ -6,36 +6,44 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the eventos database table.
+ * The persistent class for the "Eventos" database table.
  * 
  */
 @Entity
+@Table(name="\"Eventos\"")
 @NamedQuery(name="Eventos.findAll", query="SELECT e FROM Eventos e")
 public class Eventos implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id") // sin mayúsculas en Java, pero respeta el nombre en DB
+    private Integer id;
 
-	@Lob
+	@Column(name="\"DescripcionCompleta\"")
 	private String descripcionCompleta;
 
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-
-
-	@Lob
 	private String imagen;
 
+	@Column(name="\"Lugar\"")
 	private String lugar;
 
-	@Lob
 	private String resumen;
 
 	private String titulo;
 
 	public Eventos() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getDescripcionCompleta() {
@@ -52,14 +60,6 @@ public class Eventos implements Serializable {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
-	}
-
-	public int getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getImagen() {

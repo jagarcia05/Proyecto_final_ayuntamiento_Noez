@@ -6,35 +6,43 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the noticias database table.
+ * The persistent class for the "Noticias" database table.
  * 
  */
 @Entity
+@Table(name="\"Noticias\"")
 @NamedQuery(name="Noticias.findAll", query="SELECT n FROM Noticias n")
 public class Noticias implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id") // sin mayúsculas en Java, pero respeta el nombre en DB
+    private Integer id;
+
 	private String autor;
 
-	@Lob
+	@Column(name="\"contenidoCompleto\"")
 	private String contenidoCompleto;
 
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-
-	@Lob
 	private String imagen;
 
-	@Lob
 	private String resumen;
 
 	private String titulo;
 
 	public Noticias() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getAutor() {
@@ -59,14 +67,6 @@ public class Noticias implements Serializable {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
-	}
-
-	public int getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getImagen() {

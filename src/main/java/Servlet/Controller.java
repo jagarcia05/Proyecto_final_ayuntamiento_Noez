@@ -28,6 +28,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 import java.util.Base64;
+import java.util.Comparator;
 
 import Daos.DaoEventos;
 import Daos.DaoUsuario;
@@ -65,6 +66,8 @@ public class Controller extends HttpServlet {
 		NoticiasDao daoNoticia = new NoticiasDao();
 		 DaoEventos daoEventos = new DaoEventos();
 		Eventos evento = new Eventos();
+		String orden = null;
+		int totalEventos =0;
 		String apiKey = "e5c4c04ed5f5042498c1ed3d7fbb4924";
 		   String pageParam = "";
 	    int page = 1; // página por defecto
@@ -161,7 +164,7 @@ public class Controller extends HttpServlet {
 		    }
 		case "listarEventos":
 		    daoEventos = new DaoEventos();
-			String orden = request.getParameter("orden");
+			 orden = request.getParameter("orden");
 			if (orden == null) {
 			    orden = "fecha"; // valor por defecto
 			}
@@ -177,7 +180,7 @@ public class Controller extends HttpServlet {
 		    } else {
 		        page = 1;
 		    }
-
+		     totalEventos = daoEventos.contarTotalEventos();
 		    List<Eventos> todosEventos = daoEventos.obtenerTodosLosEventoss();
 			switch (orden) {
 			    case "titulo":
@@ -188,7 +191,7 @@ public class Controller extends HttpServlet {
 			        break;
 			    case "fecha":
 			    default:
-			        todosEventos.sort(Comparator.comparing(Eventos::getFecha));
+			        todosEventos.sort(Comparator.comparing(Eventos::getFecha).reversed());
 			        break;
 			}
 		
@@ -212,6 +215,8 @@ public class Controller extends HttpServlet {
 
 		    // Evitar subList fuera de rango
 		    List<Eventos> eventosPagina = todosEventos.subList(startIndex, endIndex);
+		    
+		    request.setAttribute("totalEventos", totalEventos);
 		      
 		    request.setAttribute("ListaEvento", eventosPagina);
 		    request.setAttribute("paginaActual", page);
@@ -222,7 +227,10 @@ public class Controller extends HttpServlet {
 
 		case "listaNoticias":
 		    NoticiasDao daoNoticias = new NoticiasDao();
-
+		     orden = request.getParameter("orden");
+			if (orden == null) {
+			    orden = "fecha"; // valor por defecto
+			}
 		    pageParam = request.getParameter("page");
 		    if (pageParam != null) {
 		        try {
@@ -235,10 +243,22 @@ public class Controller extends HttpServlet {
 
 		    // Obtener todas las noticias (mejor paginar con SQL en producción)
 		    List<Noticias> todasNoticias = daoNoticias.obtenerTodasLasNoticiass();
+		    switch (orden) {
+		    case "titulo":
+		    	todasNoticias.sort(Comparator.comparing(Noticias::getTitulo, String.CASE_INSENSITIVE_ORDER));
+		        break;
+		    case "autor":
+		    	todasNoticias.sort(Comparator.comparing(Noticias::getAutor, String.CASE_INSENSITIVE_ORDER));
+		        break;
+		    case "fecha":
+		    default:
+		    	todasNoticias.sort(Comparator.comparing(Noticias::getFecha).reversed());
 
+		        break;
+		}
 		    int totalRecords1 = todasNoticias.size();
 		    int totalPages1 = (int) Math.ceil((double) totalRecords1 / recordsPerPage);
-
+		    int totalnoticias = daoNoticia.contartotalNoticias();
 		    // Si totalPages1 es 0 (no hay noticias), establecemos mínimo 1 para evitar errores
 		    if (totalPages1 < 1) totalPages1 = 1;
 
@@ -258,10 +278,11 @@ public class Controller extends HttpServlet {
 		    }
 
 		    List<Noticias> noticiasPagina = todasNoticias.subList(startIndex1, endIndex1);
-
+		    request.setAttribute("orden", orden);	
 		    request.setAttribute("ListaNoticias", noticiasPagina);
 		    request.setAttribute("paginaActual", page);
 		    request.setAttribute("totalPaginas", totalPages1);
+		    request.setAttribute("totalNoticias", totalnoticias);
 
 		    request.getRequestDispatcher("informacion/noticias.jsp").forward(request, response);
 		    break;
@@ -363,7 +384,7 @@ public class Controller extends HttpServlet {
 		        daoEventos = new DaoEventos();
 		        daoEventos.eliminarEventos(idEventoEliminar);
 
-		        int totalEventos = daoEventos.contarTotalEventos();
+		         totalEventos = daoEventos.contarTotalEventos();
 		        int eventosPorPagina = 5; // O usa la variable global recordsPerPage si tienes
 		        int totalPaginas = (int) Math.ceil((double) totalEventos / eventosPorPagina);
 
