@@ -37,7 +37,7 @@
                         <i class="fa fa-user me-2"></i> ${noticiaSeleccionada.autor}
                     </p>
 
-                    <p class="card-text lead mb-4">${noticiaSeleccionada.resumen}</p>
+                    
                     <hr />
                     <div style="white-space: pre-line;">
                         ${noticiaSeleccionada.contenidoCompleto}
